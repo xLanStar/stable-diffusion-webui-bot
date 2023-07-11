@@ -1,4 +1,4 @@
-# Stable Diffusion Bot
+# Stable Diffusion webui Bot
 A Discord bot for Stable Diffusion webui. It's a bot client only. It need a server host Stable Diffusion webui.
 
 ## Screnshots
