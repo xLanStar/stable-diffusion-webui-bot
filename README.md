@@ -9,6 +9,15 @@ A Discord bot for Stable Diffusion webui. It's a bot client only. It need a serv
 
 ## Features
 - i18n
+- preview for models, txt2img
+
+## Not Supported
+- img2img(inpaint)
+- Lora, Embeding, Script Choosing UI
+- Restore Faces, Tiling, Upscaling
+- user data storaging
+- selection for models
+- handling multiple clients requests 
 
 ## Installation
 Require Node >= 18
