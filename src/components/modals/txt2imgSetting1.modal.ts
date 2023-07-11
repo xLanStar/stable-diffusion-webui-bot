@@ -23,12 +23,14 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
             .setCustomId("prompt")
             .setLabel(locale.prompt)
             .setStyle(TextInputStyle.Paragraph)
+            .setMaxLength(1024)
             .setValue(data.prompt)
 
         const negativePromptText = new TextInputBuilder()
             .setCustomId("negative")
             .setLabel(locale.negative_prompt)
             .setStyle(TextInputStyle.Paragraph)
+            .setMaxLength(1024)
             .setValue(data.negative_prompt)
 
         const stepsText = new TextInputBuilder()
