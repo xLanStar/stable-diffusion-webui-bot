@@ -1,5 +1,5 @@
 # Stable Diffusion Bot
-A Discord bot for Stable Diffusion web UI
+A Discord bot for Stable Diffusion webui. It's a bot client only. It need a server host Stable Diffusion webui.
 
 ## Screnshots
 ![](https://i.imgur.com/qtBuk6b.png)
