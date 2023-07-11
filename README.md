@@ -19,8 +19,8 @@ All settings are in `.env` file.
 - Copy `.env.example` to `.env`
 
 ## Setup Discord Bot Application
-- Require MESSAGE CONTENT INTENT in BOT tab
-- To Generate OAuth2 URL. You need checked at least serveral below:
+- Require "MESSAGE CONTENT INTENT" in BOT tab
+- To Generate OAuth2 URL, you need to make sure at least several below are checked:
     - SCOPE:
         - bot
         - applications.commands
