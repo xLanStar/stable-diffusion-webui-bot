@@ -1,9 +1,8 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
 import MenuUserSettingsButton from "../components/buttons/menuUserSettings.button.ts";
 import Txt2imgButton from "../components/buttons/txt2img.button.ts";
 import MenuLanguageMenu from "../components/selectMenus/menuLanguage.menu.ts";
 import { LocaleData } from "../i18n.ts";
-import { FILE_URL } from "../reference.ts";
 import stableDiffusion from "../stable_diffusion.ts";
 import { Builder } from "../types.js";
 
@@ -25,10 +24,11 @@ const MenuBuilder: IMenuBuilder = {
                         { name: locale.model, value: stableDiffusion.currentModel.title }
                     ],
                     image: {
-                        url: `${stableDiffusion.helper.defaults.baseURL}${FILE_URL(stableDiffusion.currentModel.model_name)}`
+                        url: `attachment://preview.png`
                     }
                 })
             ],
+            files: [new AttachmentBuilder(stableDiffusion.currentModelPreview, { name: 'preview.png' })],
             components: [
                 new ActionRowBuilder<ButtonBuilder>({
                     components: [

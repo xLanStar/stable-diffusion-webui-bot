@@ -73,6 +73,7 @@ export declare interface Model {
 export declare interface StableDiffusionClientConfig {
     Host: string
     Port: string
+    Path: string
     MinSteps?: number
     MaxSteps?: number
     MinWidth?: number

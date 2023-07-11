@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { readFileSync } from 'fs';
 import logger, { fatal } from './logger.ts';
 import { MODELS_URL, OPTIONS_URL, PROGRESS_URL, SAMPLERS_URL, SYSINFO_URL, TXT_2_IMG_URL } from './reference.ts';
 import { Model, Parameter, Progress, Sampler, StableDiffusionClientConfig, StableDiffusionOptions, Txt2imgRequestBody } from './types.ts';
@@ -15,12 +16,15 @@ export class StableDiffusionClient {
     samplers: Sampler[];
     models: { [modelHash: string]: Model };
     currentModel: Model;
+    currentModelPreview: Buffer;
 
     constructor(options: StableDiffusionClientConfig) {
         if (!options.Host)
             fatal("Stable Diffusion Host should not be empty");
         if (!options.Port)
             fatal("Stable Diffusion Port should not be empty");
+        if (!options.Path)
+            fatal("Stable Diffusion Path should not be empty");
         this._ = options;
         this.init();
     }
@@ -105,7 +109,7 @@ export class StableDiffusionClient {
             fatal(`Couldn't get sysinfo from ${this.helper.defaults.baseURL}${SYSINFO_URL}`)
         }) as any;
         this.currentModel = models.find((model: Model) => model.title === sysinfo.Config.sd_model_checkpoint);
-
+        this.currentModelPreview = readFileSync(`${this._.Path}/models/Stable-diffusion/${this.currentModel.model_name}.preview.png`)
 
         // console.log(sysinfo.Config);
         logger.info(`using model: ${this.currentModel.model_name}`);
@@ -141,6 +145,7 @@ export class StableDiffusionClient {
 const stableDiffusion = new StableDiffusionClient({
     Host: process.env.SD_HOST,
     Port: process.env.SD_PORT,
+    Path: process.env.SD_PATH,
     MinSteps: Number(process.env.SD_MIN_STEPS),
     MaxSteps: Number(process.env.SD_MAX_STEPS),
     MinWidth: Number(process.env.SD_MIN_WIDTH),
