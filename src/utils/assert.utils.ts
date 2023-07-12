@@ -15,7 +15,8 @@ export const checkIntegerRange = (interaction: ModalSubmitInteraction, locale: L
             ? (value < min || value > max)
                 ? interaction.reply({
                     content: f(locale.exceptions.outOfRange, {
-                        value: locale.steps,
+                        name,
+                        value,
                         a: min,
                         b: max
                     })
