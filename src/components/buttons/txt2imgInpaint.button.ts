@@ -7,7 +7,7 @@ const Txt2imgInpaintButton: Button = {
     build: (locale: LocaleData) => new ButtonBuilder({
         custom_id: Txt2imgInpaintButton.name,
         label: locale.inpaint,
-        style: ButtonStyle.Primary
+        style: ButtonStyle.Success
     }),
     prebuild: true,
     onInteraction: async (interaction: ButtonInteraction) => {
