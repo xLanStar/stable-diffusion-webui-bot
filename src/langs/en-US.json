@@ -35,6 +35,7 @@
     "progress": "Progress",
     "batch": "Batch",
     "eta": "ETA",
+    "preparing": "Preparing",
     "progress_status": "Batch: %batch% Progress: %progress%% ETA: %eta%",
     "generate_again": "Generate again",
     "adjust": "Adjust Parameters",

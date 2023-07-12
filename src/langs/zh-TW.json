@@ -35,6 +35,7 @@
     "progress": "進度",
     "batch": "批次",
     "eta": "預估剩餘時間",
+    "preparing": "準備中",
     "progress_status": "批次: %batch% 進度: %progress%% 預估剩餘時間: %eta%",
     "generate_again": "再生成一次",
     "adjust": "調整參數",

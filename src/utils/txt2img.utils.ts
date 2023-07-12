@@ -1,4 +1,4 @@
-import { ButtonInteraction, InteractionResponse, Message } from "discord.js";
+import { ButtonInteraction, Message } from "discord.js";
 import ProgressBuilder from "../builders/progress.builder.ts";
 import Txt2imgResultBuilder from "../builders/txt2imgResult.builder.ts";
 import { LocaleData } from "../i18n.ts";
@@ -13,20 +13,24 @@ if (!Number(PROGRESS_INTERVAL))
     logger.warn("Progress interval is empty. It has been set to default(1000)");
 
 export const handleTxt2img = async (interaction: ButtonInteraction, message: Message, locale: LocaleData, data: Parameter) => {
-    let progressing: InteractionResponse<true>;
-    interaction.deferReply().then(v => progressing = v);
+    let progressing: Message<boolean>;
+    interaction.deferReply({ fetchReply: true }).then(message => progressing = message);
     const interval = setInterval(() =>
-        stableDiffusion.requestProgress().then((progress: Progress) =>
-            (progressing) && progressing.edit(ProgressBuilder.build(locale, progress)))
-        , progressInterval)
+        stableDiffusion.requestProgress().then((progress: Progress) => {
+            logger.info(`progressing: ${progress.progress}`)
+            if (progressing && progress.current_image) progressing.edit(ProgressBuilder.build(locale, progress))
+        }), progressInterval)
     stableDiffusion.requestTxt2Img(data)
         .then(async (images: string[]) => {
+            clearInterval(interval);
             progressing.delete();
             progressing = null;
-            clearInterval(interval);
             message.reply(Txt2imgResultBuilder.build(locale, images))
         })
         .catch(err => {
+            clearInterval(interval);
+            progressing.delete();
+            progressing = null;
             logger.error(err);
             interaction.editReply({
                 content: locale.exceptions.unknown
