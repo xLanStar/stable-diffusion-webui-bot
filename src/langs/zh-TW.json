@@ -3,6 +3,8 @@
     "_name": "繁體中文",
     "bot": "Stable Diffusion 機器人",
     "home": "主選單",
+    "close": "關閉",
+    "delete": "刪除",
     "channel_settings": "頻道設定",
     "user_settings": "使用者設定",
     "txt2img": "文字生成圖片",

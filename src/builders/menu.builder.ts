@@ -1,4 +1,5 @@
 import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
+import CloseButton from "../components/buttons/close.button.ts";
 import MenuUserSettingsButton from "../components/buttons/menuUserSettings.button.ts";
 import Txt2imgButton from "../components/buttons/txt2img.button.ts";
 import MenuLanguageMenu from "../components/selectMenus/menuLanguage.menu.ts";
@@ -16,6 +17,7 @@ interface IMenuBuilder extends Builder {
 const MenuBuilder: IMenuBuilder = {
     name: "menu",
     build: (locale: LocaleData) => {
+        const lang = locale._key;
         return {
             embeds: [
                 new EmbedBuilder({
@@ -32,8 +34,8 @@ const MenuBuilder: IMenuBuilder = {
             components: [
                 new ActionRowBuilder<ButtonBuilder>({
                     components: [
-                        Txt2imgButton.static[locale._key],
-                        MenuUserSettingsButton.static[locale._key]
+                        Txt2imgButton.static[lang],
+                        MenuUserSettingsButton.static[lang]
                     ]
                 }),
                 new ActionRowBuilder<ButtonBuilder>({
@@ -50,7 +52,12 @@ const MenuBuilder: IMenuBuilder = {
                 }),
                 new ActionRowBuilder<StringSelectMenuBuilder>({
                     components: [
-                        MenuLanguageMenu.static[locale._key]
+                        MenuLanguageMenu.static[lang]
+                    ]
+                }),
+                new ActionRowBuilder<StringSelectMenuBuilder>({
+                    components: [
+                        CloseButton.static[lang]
                     ]
                 })
             ]

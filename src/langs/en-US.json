@@ -3,6 +3,8 @@
     "_name": "EnglishUS",
     "bot": "Stable Diffusion Bot",
     "home": "Home",
+    "close": "關閉",
+    "delete": "刪除",
     "channel_settings": "Channel Settings",
     "user_settings": "User Settings",
     "txt2img": "Text to Image",

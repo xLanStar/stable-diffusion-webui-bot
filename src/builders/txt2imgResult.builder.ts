@@ -1,4 +1,5 @@
 import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder } from "discord.js";
+import DeleteButton from "../components/buttons/delete.button.ts";
 import Txt2imgAdjustButton from "../components/buttons/txt2imgAdjust.button.ts";
 import Txt2imgGenerateAgainButton from "../components/buttons/txt2imgGenerateAgain.button.ts";
 import Txt2imgInpaintButton from "../components/buttons/txt2imgInpaint.button.ts";
@@ -13,17 +14,20 @@ interface ITxt2imgResultBuilder extends Builder {
 const Txt2imgResultBuilder: ITxt2imgResultBuilder = {
     name: "txt2img",
     build: (locale: LocaleData, images: string[]) => {
+        const lang = locale._key;
         return {
             files: images.map(image => new AttachmentBuilder(Buffer.from(image, 'base64'))),
             components: [
                 new ActionRowBuilder<ButtonBuilder>({
                     components: [
-                        Txt2imgGenerateAgainButton.static[locale._key],
-                        Txt2imgInpaintButton.static[locale._key],
-                        Txt2imgAdjustButton.static[locale._key]
+                        Txt2imgGenerateAgainButton.static[lang],
+                        Txt2imgInpaintButton.static[lang],
+                        Txt2imgAdjustButton.static[lang],
+                        DeleteButton.static[lang]
                     ]
                 })
-            ]
+            ],
+            embeds: []
         }
     }
 };

@@ -7,6 +7,8 @@ import txt2ImgEmbed from "../embeds/txt2img.embed.ts";
 import { LocaleData } from "../i18n.ts";
 import stableDiffusion from "../stable_diffusion.ts";
 import { Builder, Parameter } from "../types.js";
+import HomeButton from "../components/buttons/home.button.ts";
+import CloseButton from "../components/buttons/close.button.ts";
 
 
 interface ITxt2imgBuilder extends Builder {
@@ -29,23 +31,26 @@ const defaultData: Parameter = {
 const Txt2imgBuilder: ITxt2imgBuilder = {
     name: "txt2img",
     build: (locale: LocaleData, data: Parameter=defaultData) => {
+        const lang = locale._key;
         return {
             embeds: [txt2ImgEmbed.build(locale, data)],
             components: [
                 new ActionRowBuilder<StringSelectMenuBuilder>({
                     components: [
-                        SamplerMenu.static[locale._key]
+                        SamplerMenu.static[lang]
                     ]
                 }),
                 new ActionRowBuilder<ButtonBuilder>({
                     components: [
-                        Txt2imgSetting1Button.static[locale._key],
-                        Txt2imgSetting2Button.static[locale._key],
+                        Txt2imgSetting1Button.static[lang],
+                        Txt2imgSetting2Button.static[lang],
                     ]
                 }),
                 new ActionRowBuilder<ButtonBuilder>({
                 	components: [
-                		Txt2imgConfirmButton.static[locale._key]
+                		Txt2imgConfirmButton.static[lang],
+                        HomeButton.static[lang],
+                        CloseButton.static[lang]
                 	]
                 })
             ]
