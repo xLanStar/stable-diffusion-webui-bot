@@ -119,7 +119,7 @@ export class StableDiffusionClient {
         this.helper.post(OPTIONS_URL, { "sd_model_checkpoint": model.title })
             .then(() => this.currentModel = model);
 
-    public requestTxt2Img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Parameter): Promise<string[]> => {
+    public requestTxt2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Parameter): Promise<string[]> => {
         const req: Txt2imgRequestBody = {
             prompt,
             negative_prompt,
@@ -135,6 +135,10 @@ export class StableDiffusionClient {
         }
         return await this.helper.post(TXT_2_IMG_URL, req)
             .then(({ data }) => data.images);
+    }
+    
+    public requestImg2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Parameter): Promise<string[]> => {
+        return;
     }
 
     public requestProgress = async (): Promise<Progress> =>

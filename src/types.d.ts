@@ -56,9 +56,11 @@ export interface Parameter {
     batch_size: number,
     n_iter: number
 }
+export interface Txt2txtParameter extends Parameter {}
 export interface Img2imgParameter extends Parameter {
     init_images: string[]
 }
+export declare type AnyParameter = Txt2txtParameter | Img2imgParameter
 
 // Stable Diffusion web UI
 export declare interface Model {
@@ -97,11 +99,13 @@ export declare interface StableDiffusionOptions {
     sd_model_checkpoint: string
 }
 // 
-export declare interface Txt2imgRequestBody extends Parameter {
+export declare type Method = "txt2img" | "img2img"
+export declare interface RequestBody extends Parameter {
     save_images: boolean
 }
-export declare interface Img2imgRequestBody extends Img2imgParameter {
-    save_images: boolean
+export declare interface Txt2imgRequestBody extends RequestBody {
+}
+export declare interface Img2imgRequestBody extends RequestBody {
 }
 export declare interface Progress {
     progress: number,

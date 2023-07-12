@@ -36,7 +36,7 @@
     "batch": "批次",
     "eta": "預估剩餘時間",
     "preparing": "準備中",
-    "progress_status": "批次: %batch% 進度: %progress%% 預估剩餘時間: %eta%",
+    "almost_done": "即將完成...",
     "generate_again": "再生成一次",
     "adjust": "調整參數",
     "default": "(預設: %value%)",
@@ -47,6 +47,7 @@
         "n_iter": "要進行幾次生成",
         "batch_size": "一次生成幾張圖"
     },
+    "waiting": "隊列中，目前您排在第 %value% 位，請稍待片刻...",
     "exceptions": {
         "unknown": "發生錯誤",
         "type_int": "%name%(%value%) 必須是一個整數",

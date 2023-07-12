@@ -36,7 +36,7 @@
     "batch": "Batch",
     "eta": "ETA",
     "preparing": "Preparing",
-    "progress_status": "Batch: %batch% Progress: %progress%% ETA: %eta%",
+    "almost_done": "Almost done...",
     "generate_again": "Generate again",
     "adjust": "Adjust Parameters",
     "default": "(Default: %value%)",
@@ -47,6 +47,7 @@
         "n_iter": "number of generations",
         "batch_size": "number of images generated"
     },
+    "waiting": "Waiting... You are now currently at %value%",
     "exceptions": {
         "unknown": "Oops.. Caught Exception...",
         "type_int": "%name%(%value%) should be a integer",
