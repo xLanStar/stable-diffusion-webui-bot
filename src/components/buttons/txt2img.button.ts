@@ -11,7 +11,8 @@ const Txt2imgButton: Button = {
 		.setStyle(ButtonStyle.Primary),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
-		interaction.reply(Txt2imgBuilder.build(t(interaction)))
+		await interaction.message.removeAttachments();
+		interaction.update(Txt2imgBuilder.build(t(interaction)))
 	}
 }
 
