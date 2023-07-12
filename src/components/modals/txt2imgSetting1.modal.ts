@@ -74,45 +74,6 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
         data.negative_prompt = negative_prompt;
         interaction.message.edit({ embeds: [Txt2imgEmbed.build(locale, data)] })
         interaction.deferUpdate()
-        // TODO: get
-        // const width = 512;
-        // const height = 512;
-        // const seed = -1;
-        // const batch_size = 1;
-        // const n_iter = 1;
-
-        // await interaction.deferReply();
-        // await stableDiffusion.RequestTxt2Img({
-        //     prompt,
-        //     negative_prompt,
-        //     sampler_index,
-        //     steps,
-        //     cfg_scale,
-        //     height,
-        //     width,
-        //     seed,
-        //     batch_size,
-        //     n_iter,
-        // })
-        //     .then((images: string[]) =>
-        //         interaction.editReply({
-        //             embeds: [txt2ImgEmbed.build(locale, prompt, negative_prompt, sampler_index, steps, cfg_scale, width, height, seed, batch_size, n_iter)],
-        //             files: images.map(image => new AttachmentBuilder(Buffer.from(image, 'base64'))),
-        //             components: [
-        //                 new ActionRowBuilder<ButtonBuilder>({
-        //                     components: [
-        //                         GenerateAgainButton.static[locale._key]
-        //                     ]
-        //                 })
-        //             ]
-        //         })
-        //     )
-        //     .catch(err => {
-        //         logger.error(err);
-        //         interaction.editReply({
-        //             content: locale.exceptions.unknown
-        //         })
-        //     })
     }
 }
 

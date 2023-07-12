@@ -9,7 +9,9 @@ import Txt2imgEmbed from "../../embeds/txt2img.embed.ts";
 import { LocaleData, f, t } from "../../i18n.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
 import { Modal, Parameter } from "../../types.js";
+import { checkIntegerRange } from "../../utils/assert.utils.ts";
 import { getParameter } from "../../utils/parameter.utils.ts";
+import { checkInteger } from './../../utils/assert.utils.ts';
 
 interface ITxt2imgSetting1Modal extends Modal {
     build(locale: LocaleData, data: Parameter): ModalBuilder
@@ -64,8 +66,25 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
     },
     onInteraction: async (interaction: ModalSubmitInteraction) => {
         const locale = t(interaction);
+        const width = Number(interaction.fields.getTextInputValue('width'));
+        if (checkIntegerRange(interaction, locale, locale.width, stableDiffusion._.MinWidth, stableDiffusion._.MaxWidth, width)) return;
+        const height = Number(interaction.fields.getTextInputValue('height'));
+        if (checkIntegerRange(interaction, locale, locale.height, stableDiffusion._.MinHeight, stableDiffusion._.MaxHeight, height)) return;
+        const batch_size = Number(interaction.fields.getTextInputValue('batch_size'));
+        if (checkIntegerRange(interaction, locale, locale.batch_size, stableDiffusion._.MinBatchSize, stableDiffusion._.MaxBatchSize, batch_size)) return;
+        const n_iter = Number(interaction.fields.getTextInputValue('n_iter'));
+        if (checkIntegerRange(interaction, locale, locale.n_iter, stableDiffusion._.MinNIter, stableDiffusion._.MaxNIter, n_iter)) return;
+        const seed = Number(interaction.fields.getTextInputValue('seed'));
+        if (checkInteger(interaction, locale, locale.seed, seed)) return;
+
 		const data = getParameter(interaction.message.embeds[0]);
-        interaction.message.edit({ embeds: [Txt2imgEmbed.build(locale, data)] })
+        data.width = width;
+        data.height = height;
+        data.batch_size = batch_size;
+        data.n_iter = n_iter;
+        data.seed = seed;
+        interaction.message.edit({ embeds: [Txt2imgEmbed.build(locale, data)] });
+        interaction.deferUpdate();
     }
 }
 
