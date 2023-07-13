@@ -1,7 +1,8 @@
 import { LocaleString, StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
-import { LocaleData, changeLanguage, i18n, t } from "../../i18n.ts";
-import { Menu } from "../../types.js";
 import MenuBuilder from "../../builders/menu.builder.ts";
+import { LocaleData, changeLocale, i18n } from "../../i18n.ts";
+import { Menu } from "../../types/type.js";
+import { alertReply } from "../../utils/interaction.utils.ts";
 
 const MenuLanguageMenu: Menu = {
 	name: "languageMenu",
@@ -17,8 +18,11 @@ const MenuLanguageMenu: Menu = {
 	}),
 	prebuild: true,
 	onInteraction: async (interaction: StringSelectMenuInteraction) => {
-		changeLanguage(interaction.channelId, interaction.values[0] as LocaleString)
-		await interaction.update(MenuBuilder.build(t(interaction)));
+		const locale = changeLocale(interaction.channelId, interaction.values[0] as LocaleString)
+		const embed = interaction.message.embeds[0];
+		if (!embed)
+			return alertReply(interaction, locale.exceptions.no_parameters);
+		await interaction.update(MenuBuilder.update(embed, locale));
 	}
 }
 

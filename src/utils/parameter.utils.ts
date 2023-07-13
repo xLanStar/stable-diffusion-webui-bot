@@ -1,5 +1,5 @@
 import { Embed as DiscordEmbed, Message, MessageManager } from "discord.js";
-import { Parameter } from "../types.js";
+import { Parameter } from "../types/type.js";
 
 export const getLastParameterMessage = async (messages: MessageManager, message: Message): Promise<Message> => {
     let sourceMessage = message;
@@ -10,7 +10,7 @@ export const getLastParameterMessage = async (messages: MessageManager, message:
     return sourceMessage;
 }
 
-const getFieldValue = (value: string) => value.substring(4, value.length - 4);
+const getFieldValue = (value: string) => value.substring(3, value.length - 3);
 
 export const getParameter = (embed: DiscordEmbed): Parameter => {
     const fields = embed.fields;

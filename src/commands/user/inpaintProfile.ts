@@ -4,7 +4,7 @@ import {
     ContextMenuCommandBuilder
 } from 'discord.js';
 import { getCommandLocalizations } from '../../i18n.ts';
-import { Command } from '../../types.js';
+import { Command } from '../../types/type.js';
 
 const InpaintProfileCommand: Command = {
     name: "inpaintProfile",

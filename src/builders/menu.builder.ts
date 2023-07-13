@@ -1,75 +1,48 @@
-import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
-import CloseButton from "../components/buttons/close.button.ts";
-import MenuUserSettingsButton from "../components/buttons/menuUserSettings.button.ts";
-import Txt2imgButton from "../components/buttons/txt2img.button.ts";
-import MenuLanguageMenu from "../components/selectMenus/menuLanguage.menu.ts";
+import { APIEmbed, AttachmentBuilder, EmbedBuilder, User } from "discord.js";
 import { LocaleData } from "../i18n.ts";
 import stableDiffusion from "../stable_diffusion.ts";
-import { Builder } from "../types.js";
+import { Builder } from "../types/type.js";
+import MenuComponentsBuilder from "./menu.component.builder.ts";
 
 
 interface IMenuBuilder extends Builder {
-    build(locale: LocaleData): any
-    previousModel(interaction: ButtonInteraction): void
-    nextModel(interaction: ButtonInteraction): void
+    build(locale: LocaleData, user: User): any
+    update(embed: APIEmbed, locale: LocaleData): any
 }
 
 const MenuBuilder: IMenuBuilder = {
     name: "menu",
-    build: (locale: LocaleData) => {
-        const lang = locale._key;
+    build: (locale: LocaleData, user: User) => {
         return {
             embeds: [
                 new EmbedBuilder({
+                    author: {
+                        iconURL: user.avatarURL(),
+                        name: user.username
+                    },
                     title: locale.bot,
                     fields: [
                         { name: locale.model, value: stableDiffusion.currentModel.title }
                     ],
                     image: {
                         url: `attachment://preview.png`
-                    }
+                    },
+
                 })
             ],
-            files: [new AttachmentBuilder(stableDiffusion.currentModelPreview, { name: 'preview.png' })],
-            components: [
-                new ActionRowBuilder<ButtonBuilder>({
-                    components: [
-                        Txt2imgButton.static[lang],
-                        MenuUserSettingsButton.static[lang]
-                    ]
-                }),
-                new ActionRowBuilder<ButtonBuilder>({
-                    components: [
-                        new ButtonBuilder({
-                            custom_id: `!${MenuBuilder.name}.${MenuBuilder.previousModel.name}`,
-                            label: locale.previousModel,
-                            style: ButtonStyle.Primary
-                        }),
-                        new ButtonBuilder({
-                            custom_id: `!${MenuBuilder.name}.${MenuBuilder.nextModel.name}`,
-                            label: locale.nextModel,
-                            style: ButtonStyle.Primary
-                        })
-                    ]
-                }),
-                new ActionRowBuilder<StringSelectMenuBuilder>({
-                    components: [
-                        MenuLanguageMenu.static[lang]
-                    ]
-                }),
-                new ActionRowBuilder<StringSelectMenuBuilder>({
-                    components: [
-                        CloseButton.static[lang]
-                    ]
-                })
-            ]
+            files: [new AttachmentBuilder(stableDiffusion.currentModelPreview, { name: "preview.png" })],
+            components: MenuComponentsBuilder.static[locale._key]
         }
     },
-    previousModel: async (interaction: ButtonInteraction) => {
-        interaction.reply({ content: "尚未實作previousModel" })
-    },
-    nextModel: async (interaction: ButtonInteraction) => {
-        interaction.reply({ content: "尚未實作nextModel" })
+    update: (embed: APIEmbed, locale: LocaleData) => {
+        return {
+            embeds: [
+                new EmbedBuilder(embed)
+                    .setTitle(locale.bot)
+                    .setFields({ name: locale.model, value: stableDiffusion.currentModel.title })
+            ],
+            components: MenuComponentsBuilder.static[locale._key]
+        }
     }
 };
 

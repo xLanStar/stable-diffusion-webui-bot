@@ -4,11 +4,11 @@ import Txt2imgAdjustButton from "../components/buttons/txt2imgAdjust.button.ts";
 import Txt2imgGenerateAgainButton from "../components/buttons/txt2imgGenerateAgain.button.ts";
 import Txt2imgInpaintButton from "../components/buttons/txt2imgInpaint.button.ts";
 import { LocaleData, f } from "../i18n.ts";
-import { Builder } from "../types.js";
+import { Builder } from "../types/type.js";
 
 
 interface ITxt2imgResultBuilder extends Builder {
-    build(locale: LocaleData, user: User,images: string[]): any
+    build(locale: LocaleData, user: User, images: string[]): any
 }
 
 const Txt2imgResultBuilder: ITxt2imgResultBuilder = {

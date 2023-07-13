@@ -1,6 +1,7 @@
-import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
+import axios from "axios";
+import { AttachmentBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import { LocaleData, t } from "../../i18n.ts";
-import { Button } from "../../types.js";
+import { Button } from "../../types/type.ts";
 import { checkNoParameter } from "../../utils/exception.utils.ts";
 import { getLastParameterMessage } from "../../utils/parameter.utils.ts";
 
@@ -18,7 +19,7 @@ const Txt2imgInpaintButton: Button = {
         const sourceMessage = await getLastParameterMessage(interaction.channel.messages, interaction.message);
 
         if (checkNoParameter(interaction, locale, sourceMessage.embeds[0])) return;
-        
+
         return interaction.reply({ content: "尚未實作 重繪圖片" });
         
         if (!sourceMessage.embeds.length)

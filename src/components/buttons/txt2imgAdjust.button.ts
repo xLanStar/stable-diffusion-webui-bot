@@ -1,9 +1,9 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import Txt2imgBuilder from "../../builders/txt2img.builder.ts";
 import { LocaleData, t } from "../../i18n.ts";
-import { Button } from "../../types.js";
-import { getLastParameterMessage, getParameter } from "../../utils/parameter.utils.ts";
+import { Button } from "../../types/type.js";
 import { checkNoParameter } from "../../utils/exception.utils.ts";
+import { getLastParameterMessage, getParameter } from "../../utils/parameter.utils.ts";
 
 const Txt2imgAdjustButton: Button = {
     name: "txt2imgAdjustButton",
@@ -22,7 +22,7 @@ const Txt2imgAdjustButton: Button = {
 
         const data = getParameter(sourceMessage.embeds[0]);
 
-        interaction.reply(Txt2imgBuilder.build(locale, data));
+        interaction.reply(Txt2imgBuilder.build(locale, interaction.user, data));
     }
 }
 

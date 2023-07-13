@@ -1,4 +1,6 @@
-import { ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder, User } from "discord.js";
+import CloseButton from "../components/buttons/close.button.ts";
+import HomeButton from "../components/buttons/home.button.ts";
 import Txt2imgConfirmButton from "../components/buttons/txt2imgConfirm.button.ts";
 import Txt2imgSetting1Button from "../components/buttons/txt2imgSetting1.button.ts";
 import Txt2imgSetting2Button from "../components/buttons/txt2imgSetting2.button.ts";
@@ -6,13 +8,11 @@ import SamplerMenu from "../components/selectMenus/sampler.menu.ts";
 import txt2ImgEmbed from "../embeds/txt2img.embed.ts";
 import { LocaleData } from "../i18n.ts";
 import stableDiffusion from "../stable_diffusion.ts";
-import { Builder, Parameter } from "../types.js";
-import HomeButton from "../components/buttons/home.button.ts";
-import CloseButton from "../components/buttons/close.button.ts";
+import { Builder, Parameter } from "../types/type.js";
 
 
 interface ITxt2imgBuilder extends Builder {
-    build(locale: LocaleData, data?: Parameter): any
+    build(locale: LocaleData, user: User, data?: Parameter): any
 }
 
 const defaultData: Parameter = {
@@ -30,10 +30,10 @@ const defaultData: Parameter = {
 
 const Txt2imgBuilder: ITxt2imgBuilder = {
     name: "txt2img",
-    build: (locale: LocaleData, data: Parameter=defaultData) => {
+    build: (locale: LocaleData, user: User, data: Parameter = defaultData) => {
         const lang = locale._key;
         return {
-            embeds: [txt2ImgEmbed.build(locale, data)],
+            embeds: [txt2ImgEmbed.build(locale, user, data)],
             components: [
                 new ActionRowBuilder<StringSelectMenuBuilder>({
                     components: [
@@ -47,13 +47,14 @@ const Txt2imgBuilder: ITxt2imgBuilder = {
                     ]
                 }),
                 new ActionRowBuilder<ButtonBuilder>({
-                	components: [
-                		Txt2imgConfirmButton.static[lang],
+                    components: [
+                        Txt2imgConfirmButton.static[lang],
                         HomeButton.static[lang],
                         CloseButton.static[lang]
-                	]
+                    ]
                 })
-            ]
+            ],
+            files: []
         }
     },
 };

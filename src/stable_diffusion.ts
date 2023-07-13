@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
+import { AttachmentBuilder } from 'discord.js';
 import { readFileSync } from 'fs';
 import logger, { fatal } from './logger.ts';
 import { MODELS_URL, OPTIONS_URL, PROGRESS_URL, SAMPLERS_URL, SYSINFO_URL, TXT_2_IMG_URL } from './reference.ts';
-import { Model, Parameter, Progress, Sampler, StableDiffusionClientConfig, StableDiffusionOptions, Txt2imgRequestBody } from './types.ts';
+import { Model, Parameter, Progress, Sampler, StableDiffusionClientConfig, StableDiffusionOptions, Txt2imgRequestBody } from './types/type.js';
 
 export class StableDiffusionClient {
     // Variables
@@ -17,6 +18,7 @@ export class StableDiffusionClient {
     models: { [modelHash: string]: Model };
     currentModel: Model;
     currentModelPreview: Buffer;
+    _currentModelPreview: AttachmentBuilder;
 
     constructor(options: StableDiffusionClientConfig) {
         if (!options.Host)
@@ -110,6 +112,7 @@ export class StableDiffusionClient {
         }) as any;
         this.currentModel = models.find((model: Model) => model.title === sysinfo.Config.sd_model_checkpoint);
         this.currentModelPreview = readFileSync(`${this._.Path}/models/Stable-diffusion/${this.currentModel.model_name}.preview.png`)
+        this._currentModelPreview = new AttachmentBuilder(stableDiffusion.currentModelPreview, { name: 'preview.png' })
 
         // console.log(sysinfo.Config);
         logger.info(`using model: ${this.currentModel.model_name}`);
@@ -136,7 +139,7 @@ export class StableDiffusionClient {
         return await this.helper.post(TXT_2_IMG_URL, req)
             .then(({ data }) => data.images);
     }
-    
+
     public requestImg2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Parameter): Promise<string[]> => {
         return;
     }

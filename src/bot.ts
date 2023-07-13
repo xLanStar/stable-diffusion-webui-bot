@@ -1,14 +1,16 @@
 import { Client, ClientEvents, Collection, Component as DiscordComponent, EmbedBuilder, GatewayIntentBits, Partials, REST, Routes } from 'discord.js';
 import { i18n } from './i18n.ts';
 import logger, { fatal } from './logger.ts';
-import { BotConfig, Builder, Command, Component, Embed, IBuildable } from './types.ts';
+import { BotConfig, Builder, Command, Component, Embed, IBuildable } from './types/type.js';
 import { walkDir } from './utils.ts';
 
 export const prebuild = (buildable: IBuildable<DiscordComponent | EmbedBuilder>) => {
     if (!buildable.prebuild) return;
     buildable.static = {};
     for (const lang of Object.keys(i18n)) {
-        buildable.static[lang] = buildable.build(i18n[lang]).toJSON()
+        buildable.static[lang] = buildable.build(i18n[lang])
+        if (buildable.static[lang].toJSON)
+            buildable.static[lang] = buildable.static[lang].toJSON();
     }
 }
 

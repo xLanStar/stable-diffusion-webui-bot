@@ -1,13 +1,9 @@
 import { Interaction } from "discord.js";
 import bot from "../../bot.ts";
 import logger from "../../logger.ts";
-import { IInteractable } from "../../types.js";
+import { IInteractable } from "../../types/type.js";
 
 const { commands, components, builders } = bot;
-
-export const handleBuilder = (interaction: Interaction) => {
-
-}
 
 export const processCustomId = (customId: string): [string, string] =>
     customId[0] === '!'
@@ -24,7 +20,7 @@ export default {
             const { commandName } = interaction;
             const command = commands.get(commandName) as IInteractable;
             if (!command) {
-                logger.error(`[事件] interactionCreate 找不到 "${command}" 指令`)
+                logger.error(`[事件] interactionCreate 找不到 "${commandName}" 指令`)
                 return interaction.reply({
                     content: `發生錯誤...`,
                     ephemeral: true
@@ -32,7 +28,7 @@ export default {
             }
 
             try {
-                logger.info(`[事件] onInteraction ${command.name}`)
+                logger.info(`onInteraction ${commandName}`)
                 await command.onInteraction(interaction);
             } catch (err) {
                 logger.error(err);
@@ -47,14 +43,14 @@ export default {
             || interaction.isModalSubmit()) {
             // customId format:
             // [!<builderName>.<functionName>.<...builderArgs>]
-            const { customId  } = interaction;
+            const { customId } = interaction;
             // Builder
             if (customId[0] === '!') {
                 logger.info(customId.substring(1));
                 const [builderName, functionName, ...builderArgs] = customId.substring(1).split(".");
                 const builder = builders.get(builderName);
                 if (!builder) {
-                    logger.error(`[事件] interactionCreate 找不到 "${builderName}" Builder`)
+                    logger.error(`Couldn't find BuilderName=${builderName}`)
                     return interaction.reply({
                         content: `發生錯誤...`,
                         ephemeral: true
@@ -63,11 +59,11 @@ export default {
                 builder[functionName](interaction, ...builderArgs);
                 return;
             }
-            
+
             const [componentName, ...args] = customId.split(".");
             const component = components.get(componentName);
             if (!component) {
-                logger.error(`[事件] interactionCreate 找不到 "${componentName}" Modal`)
+                logger.error(`Couldn't find ComponentName=${componentName}`)
                 return interaction.reply({
                     content: `發生錯誤...`,
                     ephemeral: true
@@ -75,7 +71,7 @@ export default {
             }
 
             try {
-                logger.info(`[事件] onInteraction ${componentName}`)
+                logger.info(`onInteraction ${componentName}`)
                 await component.onInteraction(interaction, ...args);
             } catch (err) {
                 logger.error(err);

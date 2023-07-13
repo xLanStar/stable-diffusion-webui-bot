@@ -1,7 +1,7 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import MenuBuilder from "../../builders/menu.builder.ts";
 import { LocaleData, t } from "../../i18n.ts";
-import { Button } from "../../types.js";
+import { Button } from "../../types/type.js";
 
 const HomeButton: Button = {
 	name: "homeButton",
@@ -12,8 +12,7 @@ const HomeButton: Button = {
 	}),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
-		interaction.message.removeAttachments();
-		interaction.reply(MenuBuilder.build(t(interaction)));
+		interaction.reply(MenuBuilder.build(t(interaction), interaction.user));
 	}
 }
 

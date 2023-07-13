@@ -1,6 +1,6 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import { LocaleData } from "../../i18n.ts";
-import { Button } from "../../types.js";
+import { Button } from "../../types/type.js";
 
 const MenuUserSettingsButton: Button = {
 	name: "menuUserSettingsButton",

@@ -2,7 +2,7 @@ import { StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js
 import { LocaleData } from "../../i18n.ts";
 import logger from "../../logger.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
-import { Menu } from "../../types.js";
+import { Menu } from "../../types/type.js";
 
 const ModelMenu: Menu = {
 	name: "modelMenu",
@@ -18,7 +18,7 @@ const ModelMenu: Menu = {
 			})
 		})
 	},
-    prebuild: true,
+	prebuild: true,
 	onInteraction: async (interaction: StringSelectMenuInteraction) => {
 		logger.info(`you select ${interaction.values} for ${interaction.guild} ${interaction.guildId}`)
 		await interaction.reply({

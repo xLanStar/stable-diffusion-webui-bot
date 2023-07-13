@@ -8,8 +8,8 @@ import {
 import Txt2imgEmbed from "../../embeds/txt2img.embed.ts";
 import { LocaleData, f, t } from "../../i18n.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
-import { Modal, Parameter } from "../../types.js";
-import { checkInteger, checkIntegerRange } from "../../utils/exception.utils.ts";
+import { Modal, Parameter } from "../../types/type.js";
+import { checkInteger, checkIntegerRange, checkNoParameter } from "../../utils/exception.utils.ts";
 import { getParameter } from './../../utils/parameter.utils.ts';
 
 interface ITxt2imgSetting1Modal extends Modal {
@@ -23,7 +23,7 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
             custom_id: "prompt",
             label: locale.prompt,
             style: TextInputStyle.Paragraph,
-            max_length: 1016, // 1024 - prefix(```\n) - suffix(\n```)
+            max_length: 1018, // 1024 - prefix(```) - suffix(```)
             placeholder: locale.tips.prompt,
             value: data.prompt
         })
@@ -32,7 +32,7 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
             custom_id: "negative",
             label: locale.negative_prompt,
             style: TextInputStyle.Paragraph,
-            max_length: 1016, // 1024 - prefix(```\n) - suffix(\n```)
+            max_length: 1018, // 1024 - prefix(```) - suffix(```)
             placeholder: locale.tips.negative_prompt,
             value: data.negative_prompt
         })
@@ -70,6 +70,9 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
     },
     onInteraction: async (interaction: ModalSubmitInteraction) => {
         const locale = t(interaction);
+        const embed = interaction.message.embeds[0];
+        if (checkNoParameter(interaction, locale, embed)) return;
+
         const prompt = interaction.fields.getTextInputValue('prompt');
         const steps = Number(interaction.fields.getTextInputValue('steps'));
         if (checkIntegerRange(interaction, locale, locale.steps, stableDiffusion._.MinSteps, stableDiffusion._.MaxSteps, steps)) return;
@@ -77,12 +80,13 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
         if (checkInteger(interaction, locale, locale.cfg_scale, cfg_scale)) return;
         const negative_prompt = interaction.fields.getTextInputValue('negative');
 
-		const data = getParameter(interaction.message.embeds[0]);
+        const data = getParameter(embed);
         data.prompt = prompt;
         data.cfg_scale = cfg_scale;
         data.steps = steps;
         data.negative_prompt = negative_prompt;
-        interaction.message.edit({ embeds: [Txt2imgEmbed.build(locale, data)] })
+        console.log(interaction.message.editable);
+        interaction.message.edit({ embeds: [Txt2imgEmbed.update(embed, locale, data)] })
         interaction.deferUpdate()
     }
 }

@@ -65,6 +65,7 @@
         "outOfRange": "%name%(%value%) should be in range from %a% to %b%",
         "invalid": "%name%(%value%) is not a valid value",
         "empty": "%name%(%value%) should not be empty",
-        "no_parameters": "Parameters has been deleted. Cannot generate."
+        "no_parameters": "Parameters has been deleted.",
+        "undeletable": "It can't be deleted"
     }
 }

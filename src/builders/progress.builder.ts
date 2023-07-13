@@ -1,28 +1,28 @@
-import { AttachmentBuilder } from "discord.js";
+import { APIEmbed, AttachmentBuilder, User } from "discord.js";
 import ProgressEmbed from "../embeds/progress.embed.ts";
 import { LocaleData } from "../i18n.ts";
-import { Builder, Progress } from "../types.js";
+import logger from "../logger.ts";
+import { Builder, Progress } from "../types/type.js";
 
 
 interface IProgressBuilder extends Builder {
-    build(locale: LocaleData): any
-    update(locale: LocaleData, progress: Progress, updateFiles: boolean): any
+    build(locale: LocaleData, user: User): any
+    update(embed: APIEmbed, locale: LocaleData, progress: Progress, updateFiles: boolean): any
 }
 
 const ProgressBuilder: IProgressBuilder = {
     name: "progress",
-    build: (locale: LocaleData) => {
+    build: (locale: LocaleData, user: User) => {
         return {
-            embeds: [ProgressEmbed.static[locale._key]],
+            embeds: [ProgressEmbed.build(locale, user)],
             components: [
                 // TODO: interrupt
-            ],
-            content: ''
+            ]
         }
     },
-    update: (locale: LocaleData, progress: Progress, updateFiles: boolean) => {
+    update: (embed: APIEmbed, locale: LocaleData, progress: Progress, updateFiles: boolean) => {
         const result = {
-            embeds: [ProgressEmbed.update(locale, progress)]
+            embeds: [ProgressEmbed.update(embed, locale, progress)]
         } as any;
         if (updateFiles && progress.current_image) {
             result.files = [

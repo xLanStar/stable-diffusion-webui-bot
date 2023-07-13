@@ -65,6 +65,7 @@
         "outOfRange": "%name%(%value%) 必須在 %a% 到 %b% 之間",
         "invalid": "%name%(%value%) 不是一個有效的值",
         "empty": "%name% 不應該是空值",
-        "no_parameters": "生成參數已被刪除，無法繼續進行生成。"
+        "no_parameters": "參數已被刪除",
+        "undeletable": "無法刪除"
     }
 }

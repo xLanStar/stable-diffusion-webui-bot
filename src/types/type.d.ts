@@ -1,5 +1,7 @@
 import { ButtonBuilder, ClientOptions, ContextMenuCommandBuilder, EmbedBuilder, LocaleString, ModalBuilder, RepliableInteraction, SlashCommandBuilder, StringSelectMenuBuilder } from 'discord.js';
-import { LocaleData } from './i18n.ts';
+import { LocaleData } from '../i18n.ts';
+import { Methods } from './enums.ts';
+
 
 export declare type InteractionHandler = (interaction: RepliableInteraction, ...args: any[]) => Promise<any>;
 export interface INamable {
@@ -56,7 +58,7 @@ export interface Parameter {
     batch_size: number,
     n_iter: number
 }
-export interface Txt2txtParameter extends Parameter {}
+export interface Txt2txtParameter extends Parameter { }
 export interface Img2imgParameter extends Parameter {
     init_images: string[]
 }
@@ -99,7 +101,7 @@ export declare interface StableDiffusionOptions {
     sd_model_checkpoint: string
 }
 // 
-export declare type Method = "txt2img" | "img2img"
+export declare type Method = keyof typeof Methods
 export declare interface RequestBody extends Parameter {
     save_images: boolean
 }

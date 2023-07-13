@@ -1,6 +1,7 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
-import { LocaleData } from "../../i18n.ts";
-import { Button } from "../../types.js";
+import { LocaleData, t } from "../../i18n.ts";
+import { Button } from "../../types/type.js";
+import { alertReply } from "../../utils/interaction.utils.ts";
 
 const CloseButton: Button = {
 	name: "closeButton",
@@ -11,9 +12,13 @@ const CloseButton: Button = {
 	}),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
-		if (interaction.message.deletable)
+		
+		if (interaction.message.deletable) {
 			interaction.message.delete()
-		interaction.deferUpdate();
+			interaction.deferUpdate()
+		}
+		else
+			alertReply(interaction, t(interaction).exceptions.undeletable)
 	}
 }
 

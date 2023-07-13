@@ -3,7 +3,7 @@ import {
     ModalSubmitInteraction
 } from "discord.js";
 import { LocaleData } from "../../i18n.ts";
-import { Modal } from "../../types.ts";
+import { Modal } from "../../types/type.js";
 
 const UserSettingsModal: Modal = {
     name: "userSettingsModal",
