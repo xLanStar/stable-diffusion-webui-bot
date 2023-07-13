@@ -9,7 +9,7 @@ import Txt2imgEmbed from "../../embeds/txt2img.embed.ts";
 import { LocaleData, f, t } from "../../i18n.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
 import { Modal, Parameter } from "../../types.js";
-import { checkInteger, checkIntegerRange } from "../../utils/assert.utils.ts";
+import { checkInteger, checkIntegerRange } from "../../utils/exception.utils.ts";
 import { getParameter } from './../../utils/parameter.utils.ts';
 
 interface ITxt2imgSetting1Modal extends Modal {

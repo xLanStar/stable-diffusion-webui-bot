@@ -3,6 +3,7 @@ import Txt2imgBuilder from "../../builders/txt2img.builder.ts";
 import { LocaleData, t } from "../../i18n.ts";
 import { Button } from "../../types.js";
 import { getLastParameterMessage, getParameter } from "../../utils/parameter.utils.ts";
+import { checkNoParameter } from "../../utils/exception.utils.ts";
 
 const Txt2imgAdjustButton: Button = {
     name: "txt2imgAdjustButton",
@@ -17,8 +18,7 @@ const Txt2imgAdjustButton: Button = {
 
         const sourceMessage = await getLastParameterMessage(interaction.channel.messages, interaction.message);
 
-        if (!sourceMessage.embeds.length)
-            return interaction.reply({ content: locale.exceptions.cannot_find_data });
+        if (checkNoParameter(interaction, locale, sourceMessage.embeds[0])) return;
 
         const data = getParameter(sourceMessage.embeds[0]);
 
