@@ -13,7 +13,7 @@ const HomeButton: Button = {
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
 		interaction.message.removeAttachments();
-		interaction.update(MenuBuilder.build(t(interaction)));
+		interaction.reply(MenuBuilder.build(t(interaction)));
 	}
 }
 
