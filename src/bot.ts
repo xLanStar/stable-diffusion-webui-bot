@@ -57,24 +57,32 @@ export class BotClient extends Client {
     }
 
     private registerComponent(component: Component<any>) {
+        if (this.components.get(component.name))
+            return logger.error(`The component name=${component.name} have already been registered.`)
         if (component.prebuild)
             prebuild(component)
         this.components.set(component.name, component);
     }
 
     private registerEmbed(embed: Embed) {
+        if (this.embeds.get(embed.name))
+            return logger.error(`The embed name=${embed.name} have already been registered.`)
         if (embed.prebuild)
             prebuild(embed)
         this.embeds.set(embed.name, embed);
     }
 
     private registerBuilder(builder: Builder) {
+        if (this.builders.get(builder.name))
+            return logger.error(`The builder name=${builder.name} have already been registered.`)
         if (builder.prebuild)
             prebuild(builder)
         this.builders.set(builder.name, builder);
     }
 
     private registerCommand(command: Command) {
+        if (this.commands.get(command.name))
+            return logger.error(`The command name=${command.name} have already been registered.`)
         this.commands.set(command.name, command);
         this.commandArray.push(command.command.toJSON());
     }
