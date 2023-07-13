@@ -13,7 +13,7 @@ export interface IInteractable extends INamable {
 }
 
 // Command
-export declare interface Command extends IInteractable {
+export interface Command extends IInteractable {
     command: ContextMenuCommandBuilder | SlashCommandBuilder
     onInteraction: InteractionHandler
 }
@@ -58,14 +58,30 @@ export interface Parameter {
     batch_size: number,
     n_iter: number
 }
-export interface Txt2txtParameter extends Parameter { }
+export interface Txt2imgParameter extends Parameter { }
 export interface Img2imgParameter extends Parameter {
     init_images: string[]
 }
-export declare type AnyParameter = Txt2txtParameter | Img2imgParameter
+export declare type AnyParameter = Txt2imgParameter | Img2imgParameter
+export interface Txt2imgRequestInput {
+    method: Methods.txt2img,
+    parameter: Txt2imgParameter
+}
+export interface Img2imgRequestInput {
+    method: Methods.img2img,
+    parameter: Img2imgParameter
+}
+export interface RequestInput {
+    method: Method,
+    parameter: Txt2imgParameter | Img2imgParameter
+    processImageUrl?: string
+}
+export interface Img2imgRequestInput extends RequestInput {
+    processImageUrl: string
+}
 
 // Stable Diffusion web UI
-export declare interface Model {
+export interface Model {
     title: string,
     model_name: string,
     hash: string,
@@ -74,7 +90,7 @@ export declare interface Model {
     config: any
 }
 
-export declare interface StableDiffusionClientConfig {
+export interface StableDiffusionClientConfig {
     Host: string
     Port: string
     Path: string
@@ -97,19 +113,19 @@ export declare interface StableDiffusionClientConfig {
     DefaultBatchSize?: number
     DefaultSeed?: number
 }
-export declare interface StableDiffusionOptions {
+export interface StableDiffusionOptions {
     sd_model_checkpoint: string
 }
 // 
 export declare type Method = keyof typeof Methods
-export declare interface RequestBody extends Parameter {
+export interface ExtraParameter {
     save_images: boolean
 }
-export declare interface Txt2imgRequestBody extends RequestBody {
+export interface Txt2imgRequestBody extends Txt2imgParameter, ExtraParameter {
 }
-export declare interface Img2imgRequestBody extends RequestBody {
+export interface Img2imgRequestBody extends Img2imgParameter, ExtraParameter {
 }
-export declare interface Progress {
+export interface Progress {
     progress: number,
     eta_relative: number,
     state: {
@@ -125,7 +141,7 @@ export declare interface Progress {
     current_image: string,
     textinfo: string
 }
-export declare interface Sampler {
+export interface Sampler {
     name: string
     aliases: string[]
     options: object

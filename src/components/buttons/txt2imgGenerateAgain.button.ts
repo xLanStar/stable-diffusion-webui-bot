@@ -1,9 +1,8 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import { LocaleData, t } from "../../i18n.ts";
 import { Button } from "../../types/type.js";
-import { checkNoParameter } from "../../utils/exception.utils.ts";
 import { handleRequest } from "../../utils/generate.utils.ts";
-import { getLastParameterMessage, getParameter } from "../../utils/parameter.utils.ts";
+import { getLastParameterMessage, getRequestInput } from "../../utils/parameter.utils.ts";
 
 const Txt2imgGenerateAgainButton: Button = {
     name: "txt2imgGenerateAgainButton",
@@ -18,15 +17,15 @@ const Txt2imgGenerateAgainButton: Button = {
 
         const sourceMessage = await getLastParameterMessage(interaction.channel.messages, interaction.message);
 
-        if (checkNoParameter(interaction, locale, sourceMessage.embeds[0])) return;
+        const requestInput = await getRequestInput(interaction, locale, sourceMessage, true);
+        if (!requestInput) return;
 
         await interaction.deferUpdate();
         handleRequest({
-            method: "txt2img",
+            ...requestInput,
             user: interaction.user,
             parameterMessage: sourceMessage,
             locale,
-            data: getParameter(sourceMessage.embeds[0])
         });
     }
 }

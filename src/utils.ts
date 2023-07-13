@@ -1,7 +1,7 @@
 import { readdirSync, statSync } from 'fs';
 
 type FilterFunction = (file: String) => boolean;
-export const walkDir = (folder: string, filter: FilterFunction | undefined, relativeDir=""): string[] => {
+export const walkDir = (folder: string, filter: FilterFunction | undefined, relativeDir = ""): string[] => {
     if (!folder) return [];
     let files = [];
     for (const file of readdirSync(folder)) {

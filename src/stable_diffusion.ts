@@ -2,8 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 import { AttachmentBuilder } from 'discord.js';
 import { readFileSync } from 'fs';
 import logger, { fatal } from './logger.ts';
-import { MODELS_URL, OPTIONS_URL, PROGRESS_URL, SAMPLERS_URL, SYSINFO_URL, TXT_2_IMG_URL } from './reference.ts';
-import { Model, Parameter, Progress, Sampler, StableDiffusionClientConfig, StableDiffusionOptions, Txt2imgRequestBody } from './types/type.js';
+import { IMG_2_IMG_URL, MODELS_URL, OPTIONS_URL, PROGRESS_URL, SAMPLERS_URL, SYSINFO_URL, TXT_2_IMG_URL } from './reference.ts';
+import { Img2imgParameter, Img2imgRequestBody, Model, Progress, Sampler, StableDiffusionClientConfig, StableDiffusionOptions, Txt2imgParameter, Txt2imgRequestBody } from './types/type.js';
 
 export class StableDiffusionClient {
     // Variables
@@ -122,7 +122,7 @@ export class StableDiffusionClient {
         this.helper.post(OPTIONS_URL, { "sd_model_checkpoint": model.title })
             .then(() => this.currentModel = model);
 
-    public requestTxt2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Parameter): Promise<string[]> => {
+    public requestTxt2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Txt2imgParameter): Promise<string[]> => {
         const req: Txt2imgRequestBody = {
             prompt,
             negative_prompt,
@@ -136,12 +136,27 @@ export class StableDiffusionClient {
             steps: steps || this._.DefaultSteps,
             save_images: true,
         }
-        return await this.helper.post(TXT_2_IMG_URL, req)
-            .then(({ data }) => data.images);
+        const { data } = await this.helper.post(TXT_2_IMG_URL, req);
+        return data.images;
     }
 
-    public requestImg2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps }: Parameter): Promise<string[]> => {
-        return;
+    public requestImg2img = async ({ prompt, negative_prompt, sampler_index, cfg_scale, width, height, batch_size, n_iter, seed, steps, init_images }: Img2imgParameter): Promise<string[]> => {
+        const req: Img2imgRequestBody = {
+            prompt,
+            negative_prompt,
+            sampler_index: sampler_index || this._.DefaultSampler,
+            cfg_scale: cfg_scale || this._.DefaultCFGScale,
+            width: width || this._.DefaultWidth,
+            height: height || this._.DefualtHeight,
+            batch_size: batch_size || this._.DefaultBatchSize,
+            n_iter: n_iter || this._.DefaultNIter,
+            seed: seed || this._.DefaultSeed,
+            steps: steps || this._.DefaultSteps,
+            init_images,
+            save_images: true,
+        }
+        const { data } = await this.helper.post(IMG_2_IMG_URL, req);
+        return data.images;
     }
 
     public requestProgress = async (): Promise<Progress> =>
@@ -172,5 +187,32 @@ const stableDiffusion = new StableDiffusionClient({
     DefaultWidth: Number(process.env.SD_DEFAULT_WIDTH),
     DefualtHeight: Number(process.env.SD_DEFAULT_HEIGHT),
 });
+
+export const defaultTxt2imgParameter: Txt2imgParameter = {
+    prompt: "",
+    negative_prompt: "",
+    sampler_index: stableDiffusion._.DefaultSampler,
+    steps: stableDiffusion._.DefaultSteps,
+    cfg_scale: stableDiffusion._.DefaultCFGScale,
+    width: stableDiffusion._.DefaultWidth,
+    height: stableDiffusion._.DefualtHeight,
+    seed: stableDiffusion._.DefaultSeed,
+    batch_size: stableDiffusion._.DefaultBatchSize,
+    n_iter: stableDiffusion._.DefaultNIter
+}
+
+export const defaultImg2imgParameter: Img2imgParameter = {
+    prompt: "",
+    negative_prompt: "",
+    sampler_index: stableDiffusion._.DefaultSampler,
+    steps: stableDiffusion._.DefaultSteps,
+    cfg_scale: stableDiffusion._.DefaultCFGScale,
+    width: stableDiffusion._.DefaultWidth,
+    height: stableDiffusion._.DefualtHeight,
+    seed: stableDiffusion._.DefaultSeed,
+    batch_size: stableDiffusion._.DefaultBatchSize,
+    n_iter: stableDiffusion._.DefaultNIter,
+    init_images: []
+}
 
 export default stableDiffusion

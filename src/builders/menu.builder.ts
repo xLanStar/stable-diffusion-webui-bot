@@ -41,6 +41,7 @@ const MenuBuilder: IMenuBuilder = {
                     .setTitle(locale.bot)
                     .setFields({ name: locale.model, value: stableDiffusion.currentModel.title })
             ],
+            files: [],
             components: MenuComponentsBuilder.static[locale._key]
         }
     }

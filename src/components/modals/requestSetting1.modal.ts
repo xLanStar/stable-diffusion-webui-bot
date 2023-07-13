@@ -5,27 +5,27 @@ import {
     TextInputBuilder,
     TextInputStyle
 } from "discord.js";
-import Txt2imgEmbed from "../../embeds/txt2img.embed.ts";
+import RequestEmbed from "../../embeds/request.embed.ts";
 import { LocaleData, f, t } from "../../i18n.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
 import { Modal, Parameter } from "../../types/type.js";
-import { checkInteger, checkIntegerRange, checkNoParameter } from "../../utils/exception.utils.ts";
-import { getParameter } from './../../utils/parameter.utils.ts';
+import { checkInteger, checkIntegerRange } from "../../utils/exception.utils.ts";
+import { getRequestInput } from "../../utils/parameter.utils.ts";
 
-interface ITxt2imgSetting1Modal extends Modal {
-    build(locale: LocaleData, data: Parameter): ModalBuilder
+interface IRequestSetting1Modal extends Modal {
+    build(locale: LocaleData, parameter: Parameter): ModalBuilder
 }
 
-const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
-    name: "txt2imgSetting1Modal",
-    build: (locale: LocaleData, data: Parameter) => {
+const RequestSetting1Modal: IRequestSetting1Modal = {
+    name: "requestSetting1Modal",
+    build: (locale: LocaleData, parameter: Parameter) => {
         const promptText = new TextInputBuilder({
             custom_id: "prompt",
             label: locale.prompt,
             style: TextInputStyle.Paragraph,
             max_length: 1018, // 1024 - prefix(```) - suffix(```)
             placeholder: locale.tips.prompt,
-            value: data.prompt
+            value: parameter.prompt
         })
 
         const negativePromptText = new TextInputBuilder({
@@ -34,7 +34,7 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Paragraph,
             max_length: 1018, // 1024 - prefix(```) - suffix(```)
             placeholder: locale.tips.negative_prompt,
-            value: data.negative_prompt
+            value: parameter.negative_prompt
         })
 
         const stepsText = new TextInputBuilder({
@@ -43,7 +43,7 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Short,
             max_length: 4,
             placeholder: locale.tips.steps,
-            value: data.steps.toString()
+            value: parameter.steps.toString()
         })
 
         const cfgScaleText = new TextInputBuilder({
@@ -52,11 +52,11 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Short,
             max_length: 4,
             placeholder: locale.tips.cfg_scale,
-            value: data.cfg_scale.toString()
+            value: parameter.cfg_scale.toString()
         })
 
         const modal = new ModalBuilder({
-            custom_id: Txt2imgSetting1Modal.name,
+            custom_id: RequestSetting1Modal.name,
             title: locale.txt2img,
             components: [
                 new ActionRowBuilder<TextInputBuilder>({ components: [promptText] }),
@@ -70,8 +70,8 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
     },
     onInteraction: async (interaction: ModalSubmitInteraction) => {
         const locale = t(interaction);
-        const embed = interaction.message.embeds[0];
-        if (checkNoParameter(interaction, locale, embed)) return;
+        const requestInput = await getRequestInput(interaction, locale, interaction.message);
+        if (!requestInput) return;
 
         const prompt = interaction.fields.getTextInputValue('prompt');
         const steps = Number(interaction.fields.getTextInputValue('steps'));
@@ -80,15 +80,14 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
         if (checkInteger(interaction, locale, locale.cfg_scale, cfg_scale)) return;
         const negative_prompt = interaction.fields.getTextInputValue('negative');
 
-        const data = getParameter(embed);
-        data.prompt = prompt;
-        data.cfg_scale = cfg_scale;
-        data.steps = steps;
-        data.negative_prompt = negative_prompt;
-        console.log(interaction.message.editable);
-        interaction.message.edit({ embeds: [Txt2imgEmbed.update(embed, locale, data)] })
+        requestInput.parameter.prompt = prompt;
+        requestInput.parameter.cfg_scale = cfg_scale;
+        requestInput.parameter.steps = steps;
+        requestInput.parameter.negative_prompt = negative_prompt;
+
+        interaction.message.edit({ embeds: [RequestEmbed.update(interaction.message.embeds[0], locale, requestInput.parameter)] })
         interaction.deferUpdate()
     }
 }
 
-export default Txt2imgSetting1Modal;
+export default RequestSetting1Modal;

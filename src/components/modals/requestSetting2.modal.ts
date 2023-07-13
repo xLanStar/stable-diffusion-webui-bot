@@ -5,27 +5,27 @@ import {
     TextInputBuilder,
     TextInputStyle
 } from "discord.js";
-import Txt2imgEmbed from "../../embeds/txt2img.embed.ts";
+import RequestEmbed from "../../embeds/request.embed.ts";
 import { LocaleData, f, t } from "../../i18n.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
 import { Modal, Parameter } from "../../types/type.js";
-import { checkInteger, checkIntegerRange, checkNoParameter } from "../../utils/exception.utils.ts";
-import { getParameter } from "../../utils/parameter.utils.ts";
+import { checkInteger, checkIntegerRange } from "../../utils/exception.utils.ts";
+import { getRequestInput } from "../../utils/parameter.utils.ts";
 
-interface ITxt2imgSetting1Modal extends Modal {
-    build(locale: LocaleData, data: Parameter): ModalBuilder
+interface IRequestSetting2Modal extends Modal {
+    build(locale: LocaleData, parameter: Parameter): ModalBuilder
 }
 
-const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
-    name: "txt2imgSetting2Modal",
-    build: (locale: LocaleData, data: Parameter) => {
+const RequestSetting2Modal: IRequestSetting2Modal = {
+    name: "requestSetting2Modal",
+    build: (locale: LocaleData, parameter: Parameter) => {
         const widthText = new TextInputBuilder({
             custom_id: "width",
             label: `${locale.width}${f(locale.default, { value: stableDiffusion._.DefaultWidth })}${f(locale.range, { a: stableDiffusion._.MinWidth, b: stableDiffusion._.MaxWidth })}`,
             style: TextInputStyle.Short,
             max_length: 5,
             placeholder: locale.tips.width,
-            value: data.width.toString()
+            value: parameter.width.toString()
         })
 
         const heightText = new TextInputBuilder({
@@ -34,7 +34,7 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Short,
             max_length: 5,
             placeholder: locale.tips.height,
-            value: data.height.toString()
+            value: parameter.height.toString()
         })
 
         const batchSizeText = new TextInputBuilder({
@@ -43,7 +43,7 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Short,
             max_length: 5,
             placeholder: locale.tips.batch_size,
-            value: data.batch_size.toString()
+            value: parameter.batch_size.toString()
         })
 
         const nIterText = new TextInputBuilder({
@@ -52,7 +52,7 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Short,
             max_length: 4,
             placeholder: locale.tips.n_iter,
-            value: data.n_iter.toString()
+            value: parameter.n_iter.toString()
         })
 
         const seedText = new TextInputBuilder({
@@ -61,11 +61,11 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
             style: TextInputStyle.Short,
             max_length: 20,
             placeholder: locale.tips.seed,
-            value: data.seed.toString()
+            value: parameter.seed.toString()
         })
 
         const modal = new ModalBuilder({
-            custom_id: Txt2imgSetting2Modal.name,
+            custom_id: RequestSetting2Modal.name,
             title: locale.txt2img,
             components: [
                 new ActionRowBuilder<TextInputBuilder>({ components: [widthText] }),
@@ -80,8 +80,8 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
     },
     onInteraction: async (interaction: ModalSubmitInteraction) => {
         const locale = t(interaction);
-        const embed = interaction.message.embeds[0];
-        if (checkNoParameter(interaction, locale, embed)) return;
+        const requestInput = await getRequestInput(interaction, locale, interaction.message);
+        if (!requestInput) return;
 
         const width = Number(interaction.fields.getTextInputValue('width'));
         if (checkIntegerRange(interaction, locale, locale.width, stableDiffusion._.MinWidth, stableDiffusion._.MaxWidth, width)) return;
@@ -94,15 +94,15 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
         const seed = Number(interaction.fields.getTextInputValue('seed'));
         if (checkInteger(interaction, locale, locale.seed, seed)) return;
 
-        const data = getParameter(embed);
-        data.width = width;
-        data.height = height;
-        data.batch_size = batch_size;
-        data.n_iter = n_iter;
-        data.seed = seed;
-        interaction.message.edit({ embeds: [Txt2imgEmbed.update(embed, locale, data)] })
+        requestInput.parameter.width = width;
+        requestInput.parameter.height = height;
+        requestInput.parameter.batch_size = batch_size;
+        requestInput.parameter.n_iter = n_iter;
+        requestInput.parameter.seed = seed;
+
+        interaction.message.edit({ embeds: [RequestEmbed.update(interaction.message.embeds[0], locale, requestInput.parameter)] })
         interaction.deferUpdate();
     }
 }
 
-export default Txt2imgSetting2Modal;
+export default RequestSetting2Modal;

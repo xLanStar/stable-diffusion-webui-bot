@@ -1,4 +1,4 @@
-import { Embed as DiscordEmbed, RepliableInteraction } from "discord.js";
+import { RepliableInteraction } from "discord.js";
 import { LocaleData, f } from "../i18n.ts";
 import { alertReply } from "./interaction.utils.ts";
 
@@ -37,12 +37,5 @@ export const checkIntegerRange = (interaction: RepliableInteraction, locale: Loc
 export const checkEmpty = (interaction: RepliableInteraction, locale: LocaleData, name: string, value?: any) => {
     if (value && (typeof (value) === 'string' ? value.trim() : true)) return false;
     alertReply(interaction, f(locale.exceptions.empty, { name }))
-    return true;
-}
-
-
-export const checkNoParameter = (interaction: RepliableInteraction, locale: LocaleData, embed: DiscordEmbed) => {
-    if (embed) return false;
-    alertReply(interaction, locale.exceptions.no_parameters)
     return true;
 }

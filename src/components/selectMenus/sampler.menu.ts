@@ -1,10 +1,9 @@
 import { StringSelectMenuBuilder, StringSelectMenuInteraction } from "discord.js";
-import Txt2imgEmbed from "../../embeds/txt2img.embed.ts";
+import RequestEmbed from "../../embeds/request.embed.ts";
 import { LocaleData, t } from "../../i18n.ts";
 import stableDiffusion from "../../stable_diffusion.ts";
 import { Menu, Sampler } from "../../types/type.js";
-import { checkNoParameter } from "../../utils/exception.utils.ts";
-import { getParameter } from "../../utils/parameter.utils.ts";
+import { getRequestInput } from "../../utils/parameter.utils.ts";
 
 
 const SamplerMenu: Menu = {
@@ -24,10 +23,9 @@ const SamplerMenu: Menu = {
 	prebuild: true,
 	onInteraction: async (interaction: StringSelectMenuInteraction) => {
 		const locale = t(interaction);
-		if (checkNoParameter(interaction, locale, interaction.message.embeds[0])) return;
-		const data = getParameter(interaction.message.embeds[0]);
-		data.sampler_index = interaction.values[0];
-		interaction.update({ embeds: [Txt2imgEmbed.update(interaction.message.embeds[0], locale, data)] })
+		const requestInput = await getRequestInput(interaction, locale, interaction.message);
+		if (!requestInput) return;
+		interaction.update({ embeds: [RequestEmbed.update(interaction.message.embeds[0], locale, requestInput.parameter)] })
 	}
 }
 

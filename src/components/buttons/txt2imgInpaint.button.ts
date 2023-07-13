@@ -1,9 +1,8 @@
-import axios from "axios";
-import { AttachmentBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
+import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
+import RequestBuilder from "../../builders/request.builder.ts";
 import { LocaleData, t } from "../../i18n.ts";
 import { Button } from "../../types/type.ts";
-import { checkNoParameter } from "../../utils/exception.utils.ts";
-import { getLastParameterMessage } from "../../utils/parameter.utils.ts";
+import { getLastParameterMessage, getRequestInput } from "../../utils/parameter.utils.ts";
 
 const Txt2imgInpaintButton: Button = {
     name: "txt2imgInpaintButton",
@@ -18,12 +17,12 @@ const Txt2imgInpaintButton: Button = {
 
         const sourceMessage = await getLastParameterMessage(interaction.channel.messages, interaction.message);
 
-        if (checkNoParameter(interaction, locale, sourceMessage.embeds[0])) return;
+        const requestInput = await getRequestInput(interaction, locale, sourceMessage);
+        if (!requestInput) return;
 
-        return interaction.reply({ content: "尚未實作 重繪圖片" });
-        
-        if (!sourceMessage.embeds.length)
-            return interaction.reply({ content: locale.exceptions.no_parameters });
+        requestInput.method = "img2img";
+
+        interaction.reply(RequestBuilder.build(locale, interaction.user, requestInput, interaction.message.attachments.first()?.url))
     }
 }
 

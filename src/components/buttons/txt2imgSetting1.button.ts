@@ -1,9 +1,8 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import { LocaleData, t } from "../../i18n.ts";
 import { Button } from "../../types/type.js";
-import { checkNoParameter } from "../../utils/exception.utils.ts";
-import { getParameter } from "../../utils/parameter.utils.ts";
-import Txt2imgSetting1Modal from "../modals/txt2imgSetting1.modal.ts";
+import { getRequestInput } from "../../utils/parameter.utils.ts";
+import RequestSetting1Modal from "../modals/requestSetting1.modal.ts";
 
 const Txt2imgSetting1Button: Button = {
 	name: "txt2imgSetting1Button",
@@ -15,8 +14,11 @@ const Txt2imgSetting1Button: Button = {
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
 		const locale = t(interaction);
-		if (checkNoParameter(interaction, locale, interaction.message.embeds[0])) return;
-		interaction.showModal(Txt2imgSetting1Modal.build(locale, getParameter(interaction.message.embeds[0])))
+
+		const requestInput = await getRequestInput(interaction, locale, interaction.message);
+		if (!requestInput) return;
+
+		interaction.showModal(RequestSetting1Modal.build(locale, requestInput.parameter))
 	}
 }
 

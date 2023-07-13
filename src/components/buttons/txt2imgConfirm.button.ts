@@ -1,9 +1,9 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
 import { LocaleData, t } from "../../i18n.ts";
 import { Button } from "../../types/type.js";
-import { checkEmpty, checkNoParameter } from "../../utils/exception.utils.ts";
+import { checkEmpty } from "../../utils/exception.utils.ts";
 import { handleRequest } from "../../utils/generate.utils.ts";
-import { getParameter } from "../../utils/parameter.utils.ts";
+import { getRequestInput } from "../../utils/parameter.utils.ts";
 
 const Txt2imgConfirmButton: Button = {
     name: "txt2imgConfirmButton",
@@ -15,17 +15,18 @@ const Txt2imgConfirmButton: Button = {
     prebuild: true,
     onInteraction: async (interaction: ButtonInteraction) => {
         const locale = t(interaction);
-        if (checkNoParameter(interaction, locale, interaction.message.embeds[0])) return;
-        const data = getParameter(interaction.message.embeds[0]);
-        if (checkEmpty(interaction, locale, locale.prompt, data.prompt)) return;
+
+        const requestInput = await getRequestInput(interaction, locale, interaction.message, true);
+        if (!requestInput) return;
+
+        if (checkEmpty(interaction, locale, locale.prompt, requestInput.parameter.prompt)) return;
 
         await interaction.deferUpdate();
         handleRequest({
-            method: "txt2img",
+            ...requestInput,
             user: interaction.user,
             parameterMessage: interaction.message,
-            locale,
-            data
+            locale
         });
     }
 }

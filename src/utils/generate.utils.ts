@@ -1,10 +1,10 @@
 import { Message, User } from "discord.js";
 import ProgressBuilder from "../builders/progress.builder.ts";
-import Txt2imgResultBuilder from "../builders/txt2imgResult.builder.ts";
+import Txt2imgResultBuilder from "../builders/requestResult.builder.ts";
 import { LocaleData, f } from "../i18n.ts";
 import logger from "../logger.ts";
 import stableDiffusion from "../stable_diffusion.ts";
-import { AnyParameter, Method, Progress } from "../types/type.js";
+import { Method, Progress, RequestInput } from "../types/type.js";
 
 const { PROGRESS_INTERVAL } = process.env;
 
@@ -12,19 +12,17 @@ const progressInterval = Number(PROGRESS_INTERVAL) || 1000;
 if (!Number(PROGRESS_INTERVAL))
     logger.warn("Progress interval should be a integer. It has been set to default(1000)");
 
-interface Request {
-    method: Method
+interface WaitingRequestInput extends RequestInput {
     user: User,
     progressing?: Message,
     parameterMessage: Message
     locale: LocaleData
-    data: AnyParameter
 }
 
 let isRequesting = false;
-const requestQueue: Request[] = [];
+const requestQueue: WaitingRequestInput[] = [];
 
-export const handleRequest = async (request: Request) => {
+export const handleRequest = async (request: WaitingRequestInput) => {
     requestQueue.push(request);
     if (!isRequesting) {
         isRequesting = true;
@@ -41,7 +39,7 @@ const requestFunc: Partial<Record<Method, Function>> = {
 
 const processRequest = async () => {
     while (requestQueue.length) {
-        const { method, user, progressing: _progressing, parameterMessage, locale, data } = requestQueue.shift()
+        const { method, user, progressing: _progressing, parameterMessage, locale, parameter } = requestQueue.shift()
 
         // Update Waiting
         for (let i = 0; i != requestQueue.length; i++) {
@@ -79,7 +77,7 @@ const processRequest = async () => {
             }), progressInterval)
 
         // Send request
-        await requestFunc[method](data)
+        await requestFunc[method](parameter)
             .then((images: string[]) => {
                 // Request is done
                 done = true;

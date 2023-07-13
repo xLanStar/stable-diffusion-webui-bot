@@ -1,6 +1,7 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
-import Txt2imgBuilder from "../../builders/txt2img.builder.ts";
+import RequestBuilder from "../../builders/request.builder.ts";
 import { LocaleData, t } from "../../i18n.ts";
+import { defaultTxt2imgParameter } from "../../stable_diffusion.ts";
 import { Button } from "../../types/type.js";
 
 const Txt2imgButton: Button = {
@@ -14,7 +15,7 @@ const Txt2imgButton: Button = {
 	onInteraction: async (interaction: ButtonInteraction) => {
 		if (interaction.message.attachments.size)
 			await interaction.message.removeAttachments();
-		interaction.update(Txt2imgBuilder.build(t(interaction), interaction.user))
+		interaction.update(RequestBuilder.build(t(interaction), interaction.user, { method: "txt2img", parameter: defaultTxt2imgParameter }))
 	}
 }
 

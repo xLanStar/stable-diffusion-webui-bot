@@ -7,12 +7,12 @@ import { LocaleData, f } from "../i18n.ts";
 import { Builder } from "../types/type.js";
 
 
-interface ITxt2imgResultBuilder extends Builder {
+interface IRequestResultBuilder extends Builder {
     build(locale: LocaleData, user: User, images: string[]): any
 }
 
-const Txt2imgResultBuilder: ITxt2imgResultBuilder = {
-    name: "txt2imgResult",
+const RequestResultBuilder: IRequestResultBuilder = {
+    name: "requestResult",
     build: (locale: LocaleData, user: User, images: string[]) => {
         const lang = locale._key;
         return {
@@ -33,4 +33,4 @@ const Txt2imgResultBuilder: ITxt2imgResultBuilder = {
     }
 };
 
-export default Txt2imgResultBuilder;
+export default RequestResultBuilder;
