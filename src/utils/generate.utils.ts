@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, User } from "discord.js";
 import ProgressBuilder from "../builders/progress.builder.ts";
 import Txt2imgResultBuilder from "../builders/txt2imgResult.builder.ts";
 import { LocaleData, f } from "../i18n.ts";
@@ -14,6 +14,7 @@ if (!Number(PROGRESS_INTERVAL))
 
 interface Request {
     method: Method
+    user: User,
     progressing?: Message,
     message: Message
     locale: LocaleData
@@ -40,7 +41,7 @@ const requestFunc: Partial<Record<Method, Function>> = {
 
 const processRequest = async () => {
     while (requestQueue.length) {
-        const { method, progressing, message, locale, data } = requestQueue.shift()
+        const { method, user, progressing, message, locale, data } = requestQueue.shift()
 
         // Update Waiting
         for (let i = 0; i != requestQueue.length; i++) {
@@ -69,7 +70,7 @@ const processRequest = async () => {
                 // Request is done
                 done = true;
                 clearInterval(interval);
-                _progressing.edit(Txt2imgResultBuilder.build(locale, images))
+                _progressing.edit(Txt2imgResultBuilder.build(locale, user, images))
             })
             .catch((err: any) => {
                 // Caught error

@@ -58,6 +58,7 @@
         "batch_size": "每次生成產出幾張圖"
     },
     "waiting": "隊列中，目前您排在第 %value% 位，請稍待片刻...",
+    "done": "完成! %user%",
     "exceptions": {
         "unknown": "發生錯誤",
         "type_int": "%name%(%value%) 必須是一個整數",

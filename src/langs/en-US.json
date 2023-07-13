@@ -58,6 +58,7 @@
         "batch_size": "Number of images generated in each run"
     },
     "waiting": "Waiting... You are now currently at %value%",
+    "done": "Done! %user%",
     "exceptions": {
         "unknown": "Oops.. Caught Exception...",
         "type_int": "%name%(%value%) should be a integer",
