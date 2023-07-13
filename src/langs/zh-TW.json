@@ -29,6 +29,7 @@
     "ask_steps": "請輸入採樣步數",
     "width": "寬",
     "height": "長",
+    "size": "大小",
     "batch_size": "批次大小",
     "n_iter": "批次數量",
     "seed": "隨機種子",
@@ -45,9 +46,15 @@
     "tip": "(提示: %value%)",
     "range": "(範圍: %a% ~ %b%)",
     "tips": {
-        "seed": "-1 代表隨機",
-        "n_iter": "要進行幾次生成",
-        "batch_size": "一次生成幾張圖"
+        "prompt": "你希望出現的樣子",
+        "negative_prompt": "你不希望出現的樣子",
+        "cfg_scale": "提示詞相關性",
+        "steps": "採樣迭代步數，步數越高得到的圖片會越精確",
+        "width": "圖片寬度",
+        "height": "圖片長度",
+        "seed": "種子碼，相同種子碼產生的圖會越相近。-1代表隨機",
+        "n_iter": "生成次數",
+        "batch_size": "每次生成產出幾張圖"
     },
     "waiting": "隊列中，目前您排在第 %value% 位，請稍待片刻...",
     "exceptions": {

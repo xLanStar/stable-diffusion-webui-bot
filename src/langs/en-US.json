@@ -29,6 +29,7 @@
     "ask_steps": "Please input sampling steps",
     "width": "Width",
     "height": "Height",
+    "size": "Size",
     "batch_size": "Batch Size",
     "n_iter": "Batch Count",
     "seed": "Seed",
@@ -45,9 +46,15 @@
     "tip": "(%value%)",
     "range": "(Range: %a% ~ %b%)",
     "tips": {
-        "seed": "-1 present random",
-        "n_iter": "number of generations",
-        "batch_size": "number of images generated"
+        "prompt": "Anything you want",
+        "negative_prompt": "Anything you don't want",
+        "cfg_scale": "How the image looks closer to the prompt",
+        "steps": "The number of iterations",
+        "width": "Image width",
+        "height": "Image height",
+        "seed": "Variable to control image variations. -1 represents random",
+        "n_iter": "Number of runs",
+        "batch_size": "Number of images generated in each run"
     },
     "waiting": "Waiting... You are now currently at %value%",
     "exceptions": {

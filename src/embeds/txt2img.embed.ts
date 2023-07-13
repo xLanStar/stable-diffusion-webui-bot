@@ -13,16 +13,15 @@ const Txt2imgEmbed: ITxt2imgEmbed = {
         return new EmbedBuilder({
             title: locale.txt2img_parameters,
             fields: [
-                { name: locale.prompt, value: txt2imgData.prompt },
-                { name: locale.negative_prompt, value: txt2imgData.negative_prompt },
-                { name: locale.sampler, value: txt2imgData.sampler_index, inline: true },
-                { name: locale.steps, value: txt2imgData.steps.toString(), inline: true },
-                { name: locale.cfg_scale, value: txt2imgData.cfg_scale.toString(), inline: true },
-                { name: locale.width, value: txt2imgData.width.toString(), inline: true },
-                { name: locale.height, value: txt2imgData.height.toString(), inline: true },
-                { name: locale.seed, value: txt2imgData.seed.toString(), inline: true },
-                { name: locale.batch_size, value: txt2imgData.batch_size.toString(), inline: true },
-                { name: locale.n_iter, value: txt2imgData.n_iter.toString(), inline: true },
+                { name: locale.prompt, value: `\`\`\`\n${txt2imgData.prompt}\n\`\`\`` },
+                { name: locale.negative_prompt, value: `\`\`\`\n${txt2imgData.negative_prompt}\n\`\`\`` },
+                { name: locale.sampler, value: `\`\`\`\n${txt2imgData.sampler_index}\n\`\`\``, inline: true },
+                { name: locale.steps, value: `\`\`\`\n${txt2imgData.steps}\n\`\`\``, inline: true },
+                { name: locale.cfg_scale, value: `\`\`\`\n${txt2imgData.cfg_scale}\n\`\`\``, inline: true },
+                { name: locale.size, value: `\`\`\`\n${txt2imgData.width}x${txt2imgData.height}\n\`\`\``, inline: true },
+                { name: locale.batch_size, value: `\`\`\`\n${txt2imgData.batch_size}\n\`\`\``, inline: true },
+                { name: locale.n_iter, value: `\`\`\`\n${txt2imgData.n_iter}\n\`\`\``, inline: true },
+                { name: locale.seed, value: `\`\`\`\n${txt2imgData.seed}\n\`\`\``, inline: true },
             ],
             footer: {
                 text: "注意！若刪除此嵌入內容，將會導致無法再次生成圖片。"

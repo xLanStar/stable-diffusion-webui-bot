@@ -20,46 +20,62 @@ interface ITxt2imgSetting1Modal extends Modal {
 const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
     name: "txt2imgSetting2Modal",
     build: (locale: LocaleData, data: Parameter) => {
-        const widthText = new TextInputBuilder()
-            .setCustomId("width")
-            .setLabel(`${locale.width}${f(locale.default, { value: stableDiffusion._.DefaultWidth })}${f(locale.range, { a: stableDiffusion._.MinWidth, b: stableDiffusion._.MaxWidth })}`)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.width.toString())
+        const widthText = new TextInputBuilder({
+            custom_id: "width",
+            label: `${locale.width}${f(locale.default, { value: stableDiffusion._.DefaultWidth })}${f(locale.range, { a: stableDiffusion._.MinWidth, b: stableDiffusion._.MaxWidth })}`,
+            style: TextInputStyle.Short,
+            max_length: 5,
+            placeholder: locale.tips.width,
+            value: data.width.toString()
+        })
 
-        const heightText = new TextInputBuilder()
-            .setCustomId("height")
-            .setLabel(`${locale.height}${f(locale.default, { value: stableDiffusion._.DefualtHeight })}${f(locale.range, { a: stableDiffusion._.MinHeight, b: stableDiffusion._.MaxHeight })}`)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.height.toString())
+        const heightText = new TextInputBuilder({
+            custom_id: "height",
+            label: `${locale.height}${f(locale.default, { value: stableDiffusion._.DefualtHeight })}${f(locale.range, { a: stableDiffusion._.MinHeight, b: stableDiffusion._.MaxHeight })}`,
+            style: TextInputStyle.Short,
+            max_length: 5,
+            placeholder: locale.tips.height,
+            value: data.height.toString()
+        })
 
-        const seedText = new TextInputBuilder()
-            .setCustomId("seed")
-            .setLabel(`${locale.seed}${f(locale.default, { value: stableDiffusion._.DefaultSeed })}`)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.seed.toString())
+        const batchSizeText = new TextInputBuilder({
+            custom_id: "batch_size",
+            label: `${locale.batch_size}${f(locale.default, { value: stableDiffusion._.DefaultBatchSize })}${f(locale.range, { a: stableDiffusion._.MinBatchSize, b: stableDiffusion._.MaxBatchSize })}`,
+            style: TextInputStyle.Short,
+            max_length: 5,
+            placeholder: locale.tips.batch_size,
+            value: data.batch_size.toString()
+        })
 
-        const batchSizeText = new TextInputBuilder()
-            .setCustomId("batch_size")
-            .setLabel(`${locale.batch_size}${f(locale.default, { value: stableDiffusion._.DefaultBatchSize })}${f(locale.range, { a: stableDiffusion._.MinBatchSize, b: stableDiffusion._.MaxBatchSize })}`)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.batch_size.toString())
+        const nIterText = new TextInputBuilder({
+            custom_id: "n_iter",
+            label: `${locale.n_iter}${f(locale.default, { value: stableDiffusion._.DefaultNIter })}${f(locale.range, { a: stableDiffusion._.MinNIter, b: stableDiffusion._.MaxNIter })}`,
+            style: TextInputStyle.Short,
+            max_length: 4,
+            placeholder: locale.tips.n_iter,
+            value: data.n_iter.toString()
+        })
 
-        const nIterText = new TextInputBuilder()
-            .setCustomId("n_iter")
-            .setLabel(`${locale.n_iter}${f(locale.default, { value: stableDiffusion._.DefaultNIter })}${f(locale.range, { a: stableDiffusion._.MinNIter, b: stableDiffusion._.MaxNIter })}`)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.n_iter.toString())
+        const seedText = new TextInputBuilder({
+            custom_id: "seed",
+            label: `${locale.seed}${f(locale.default, { value: stableDiffusion._.DefaultSeed })}`,
+            style: TextInputStyle.Short,
+            max_length: 20,
+            placeholder: locale.tips.seed,
+            value: data.seed.toString()
+        })
 
-        const modal = new ModalBuilder()
-            .setCustomId(Txt2imgSetting2Modal.name)
-            .setTitle(locale.txt2img)
+        const modal = new ModalBuilder({
+            custom_id: Txt2imgSetting2Modal.name,
+            title: locale.txt2img
+        })
 
         modal.addComponents(
             new ActionRowBuilder({ components: [widthText] }),
             new ActionRowBuilder({ components: [heightText] }),
-            new ActionRowBuilder({ components: [seedText] }),
             new ActionRowBuilder({ components: [batchSizeText] }),
-            new ActionRowBuilder({ components: [nIterText] })
+            new ActionRowBuilder({ components: [nIterText] }),
+            new ActionRowBuilder({ components: [seedText] })
         );
 
         return modal;

@@ -19,35 +19,46 @@ interface ITxt2imgSetting1Modal extends Modal {
 const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
     name: "txt2imgSetting1Modal",
     build: (locale: LocaleData, data: Parameter) => {
-        const promptText = new TextInputBuilder()
-            .setCustomId("prompt")
-            .setLabel(locale.prompt)
-            .setStyle(TextInputStyle.Paragraph)
-            .setMaxLength(1024)
-            .setValue(data.prompt)
+        const promptText = new TextInputBuilder({
+            custom_id: "prompt",
+            label: locale.prompt,
+            style: TextInputStyle.Paragraph,
+            max_length: 1016, // 1024 - prefix(```\n) - suffix(\n```)
+            placeholder: locale.tips.prompt,
+            value: data.prompt
+        })
 
-        const negativePromptText = new TextInputBuilder()
-            .setCustomId("negative")
-            .setLabel(locale.negative_prompt)
-            .setStyle(TextInputStyle.Paragraph)
-            .setMaxLength(1024)
-            .setValue(data.negative_prompt)
+        const negativePromptText = new TextInputBuilder({
+            custom_id: "negative",
+            label: locale.negative_prompt,
+            style: TextInputStyle.Paragraph,
+            max_length: 1016, // 1024 - prefix(```\n) - suffix(\n```)
+            placeholder: locale.tips.negative_prompt,
+            value: data.negative_prompt
+        })
 
-        const stepsText = new TextInputBuilder()
-            .setCustomId("steps")
-            .setLabel(`${locale.steps}${f(locale.range, { a: stableDiffusion._.MinSteps, b: stableDiffusion._.MaxSteps })}`)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.steps.toString())
+        const stepsText = new TextInputBuilder({
+            custom_id: "steps",
+            label: `${locale.steps}${f(locale.range, { a: stableDiffusion._.MinSteps, b: stableDiffusion._.MaxSteps })}`,
+            style: TextInputStyle.Short,
+            max_length: 4,
+            placeholder: locale.tips.steps,
+            value: data.steps.toString()
+        })
 
-        const cfgScaleText = new TextInputBuilder()
-            .setCustomId("cfg_scale")
-            .setLabel(locale.cfg_scale)
-            .setStyle(TextInputStyle.Short)
-            .setValue(data.cfg_scale.toString())
+        const cfgScaleText = new TextInputBuilder({
+            custom_id: "cfg_scale",
+            label: locale.cfg_scale,
+            style: TextInputStyle.Short,
+            max_length: 4,
+            placeholder: locale.tips.cfg_scale,
+            value: data.cfg_scale.toString()
+        })
 
-        const modal = new ModalBuilder()
-            .setCustomId(Txt2imgSetting1Modal.name)
-            .setTitle(locale.txt2img)
+        const modal = new ModalBuilder({
+            custom_id: Txt2imgSetting1Modal.name,
+            title: locale.txt2img
+        })
 
         modal.addComponents(
             new ActionRowBuilder({ components: [promptText] }),
