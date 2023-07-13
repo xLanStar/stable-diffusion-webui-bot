@@ -45,6 +45,7 @@
     "default": "(預設: %value%)",
     "tip": "(提示: %value%)",
     "range": "(範圍: %a% ~ %b%)",
+    "request_modal_footer": "若刪除此嵌入內容，將無法再次生成圖片",
     "tips": {
         "prompt": "你希望出現的樣子",
         "negative_prompt": "你不希望出現的樣子",
@@ -63,6 +64,6 @@
         "outOfRange": "%name%(%value%) 必須在 %a% 到 %b% 之間",
         "invalid": "%name%(%value%) 不是一個有效的值",
         "empty": "%name% 不應該是空值",
-        "cannot_find_data": "生成參數已被刪除，無法繼續進行生成。"
+        "no_parameters": "生成參數已被刪除，無法繼續進行生成。"
     }
 }

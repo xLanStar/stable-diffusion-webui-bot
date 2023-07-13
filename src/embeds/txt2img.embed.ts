@@ -24,7 +24,7 @@ const Txt2imgEmbed: ITxt2imgEmbed = {
                 { name: locale.seed, value: `\`\`\`\n${txt2imgData.seed}\n\`\`\``, inline: true },
             ],
             footer: {
-                text: "注意！若刪除此嵌入內容，將會導致無法再次生成圖片。"
+                text: locale.request_modal_footer
             },
             color: 0x7289da
         })

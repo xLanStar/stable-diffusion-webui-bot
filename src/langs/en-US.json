@@ -45,6 +45,7 @@
     "default": "(Default: %value%)",
     "tip": "(%value%)",
     "range": "(Range: %a% ~ %b%)",
+    "request_modal_footer": "Parameters are following this embed. If deleted, you won't be able to generate again.",
     "tips": {
         "prompt": "Anything you want",
         "negative_prompt": "Anything you don't want",
@@ -63,6 +64,6 @@
         "outOfRange": "%name%(%value%) should be in range from %a% to %b%",
         "invalid": "%name%(%value%) is not a valid value",
         "empty": "%name%(%value%) should not be empty",
-        "cannot_find_data": "Generation parameters has been deleted. Cannot generate."
+        "no_parameters": "Parameters has been deleted. Cannot generate."
     }
 }
