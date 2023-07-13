@@ -5,10 +5,11 @@ import { Button } from "../../types.js";
 
 const Txt2imgButton: Button = {
 	name: "txt2imgButton",
-	build: (locale: LocaleData) => new ButtonBuilder()
-		.setCustomId(Txt2imgButton.name)
-		.setLabel(locale.txt2img)
-		.setStyle(ButtonStyle.Primary),
+	build: (locale: LocaleData) => new ButtonBuilder({
+		custom_id: Txt2imgButton.name,
+		label: locale.txt2img,
+		style: ButtonStyle.Primary
+	}),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
 		await interaction.message.removeAttachments();

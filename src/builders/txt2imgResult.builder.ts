@@ -12,7 +12,7 @@ interface ITxt2imgResultBuilder extends Builder {
 }
 
 const Txt2imgResultBuilder: ITxt2imgResultBuilder = {
-    name: "txt2img",
+    name: "txt2imgResult",
     build: (locale: LocaleData, images: string[]) => {
         const lang = locale._key;
         return {

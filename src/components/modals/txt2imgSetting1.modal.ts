@@ -57,15 +57,14 @@ const Txt2imgSetting1Modal: ITxt2imgSetting1Modal = {
 
         const modal = new ModalBuilder({
             custom_id: Txt2imgSetting1Modal.name,
-            title: locale.txt2img
+            title: locale.txt2img,
+            components: [
+                new ActionRowBuilder<TextInputBuilder>({ components: [promptText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [negativePromptText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [stepsText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [cfgScaleText] })
+            ]
         })
-
-        modal.addComponents(
-            new ActionRowBuilder({ components: [promptText] }),
-            new ActionRowBuilder({ components: [negativePromptText] }),
-            new ActionRowBuilder({ components: [stepsText] }),
-            new ActionRowBuilder({ components: [cfgScaleText] })
-        );
 
         return modal;
     },

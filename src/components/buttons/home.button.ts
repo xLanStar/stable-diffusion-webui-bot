@@ -5,10 +5,11 @@ import { Button } from "../../types.js";
 
 const HomeButton: Button = {
 	name: "homeButton",
-	build: (locale: LocaleData) => new ButtonBuilder()
-		.setCustomId(HomeButton.name)
-		.setLabel(locale.home)
-		.setStyle(ButtonStyle.Primary),
+	build: (locale: LocaleData) => new ButtonBuilder({
+		custom_id: HomeButton.name,
+		label: locale.home,
+		style: ButtonStyle.Primary
+	}),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
 		interaction.message.removeAttachments();

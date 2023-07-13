@@ -9,15 +9,16 @@ import { getParameter } from "../../utils/parameter.utils.ts";
 const SamplerMenu: Menu = {
 	name: "samplerMenu",
 	build: (locale: LocaleData) => {
-		return new StringSelectMenuBuilder()
-			.setCustomId(SamplerMenu.name)
-			.setPlaceholder(locale.sampler)
-			.setOptions(stableDiffusion.samplers.map((sampler: Sampler) => {
+		return new StringSelectMenuBuilder({
+			custom_id: SamplerMenu.name,
+			placeholder: locale.sampler,
+			options: stableDiffusion.samplers.map((sampler: Sampler) => {
 				return {
 					label: sampler.name,
 					value: sampler.name
 				}
-			}))
+			})
+		})
 	},
     prebuild: true,
 	onInteraction: async (interaction: StringSelectMenuInteraction) => {

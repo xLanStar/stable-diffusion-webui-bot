@@ -4,10 +4,11 @@ import { Button } from "../../types.js";
 
 const DeleteButton: Button = {
 	name: "deleteButton",
-	build: (locale: LocaleData) => new ButtonBuilder()
-		.setCustomId(DeleteButton.name)
-		.setLabel(locale.delete)
-		.setStyle(ButtonStyle.Danger),
+	build: (locale: LocaleData) => new ButtonBuilder({
+		custom_id: DeleteButton.name,
+		label: locale.delete,
+		style: ButtonStyle.Danger
+	}),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
 		if (interaction.message.deletable)

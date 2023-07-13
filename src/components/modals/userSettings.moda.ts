@@ -1,24 +1,17 @@
 import {
-    ActionRowBuilder,
     ModalBuilder,
-    ModalSubmitInteraction,
-    TextInputBuilder,
-    TextInputStyle
+    ModalSubmitInteraction
 } from "discord.js";
-import { LocaleData, f } from "../../i18n.ts";
-import stableDiffusion from "../../stable_diffusion.ts";
+import { LocaleData } from "../../i18n.ts";
 import { Modal } from "../../types.ts";
 
 const UserSettingsModal: Modal = {
     name: "userSettingsModal",
     build: (locale: LocaleData) => {
-        const modal = new ModalBuilder()
-            .setCustomId(UserSettingsModal.name)
-            .setTitle(locale.txt2img)
-
-        modal.addComponents(
-            // new ActionRowBuilder({ components: [widthText] }),
-        );
+        const modal = new ModalBuilder({
+            custom_id: UserSettingsModal.name,
+            title: locale.txt2img
+        })
 
         return modal;
     },

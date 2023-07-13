@@ -7,10 +7,11 @@ import { getParameter } from "../../utils/parameter.utils.ts";
 
 const Txt2imgConfirmButton: Button = {
     name: "txt2imgConfirmButton",
-    build: (locale: LocaleData) => new ButtonBuilder()
-        .setCustomId(Txt2imgConfirmButton.name)
-        .setLabel(locale.generate)
-        .setStyle(ButtonStyle.Success),
+    build: (locale: LocaleData) => new ButtonBuilder({
+		custom_id: Txt2imgConfirmButton.name,
+		label: locale.generate,
+		style: ButtonStyle.Success
+	}),
     prebuild: true,
     onInteraction: async (interaction: ButtonInteraction) => {
         const locale = t(interaction);

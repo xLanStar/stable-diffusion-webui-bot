@@ -67,16 +67,15 @@ const Txt2imgSetting2Modal: ITxt2imgSetting1Modal = {
 
         const modal = new ModalBuilder({
             custom_id: Txt2imgSetting2Modal.name,
-            title: locale.txt2img
+            title: locale.txt2img,
+            components: [
+                new ActionRowBuilder<TextInputBuilder>({ components: [widthText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [heightText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [batchSizeText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [nIterText] }),
+                new ActionRowBuilder<TextInputBuilder>({ components: [seedText] })
+            ]
         })
-
-        modal.addComponents(
-            new ActionRowBuilder({ components: [widthText] }),
-            new ActionRowBuilder({ components: [heightText] }),
-            new ActionRowBuilder({ components: [batchSizeText] }),
-            new ActionRowBuilder({ components: [nIterText] }),
-            new ActionRowBuilder({ components: [seedText] })
-        );
 
         return modal;
     },

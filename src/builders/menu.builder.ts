@@ -40,14 +40,16 @@ const MenuBuilder: IMenuBuilder = {
                 }),
                 new ActionRowBuilder<ButtonBuilder>({
                     components: [
-                        new ButtonBuilder()
-                            .setCustomId(`!${MenuBuilder.name}.${MenuBuilder.previousModel.name}`)
-                            .setLabel(locale.previousModel)
-                            .setStyle(ButtonStyle.Primary),
-                        new ButtonBuilder()
-                            .setCustomId(`!${MenuBuilder.name}.${MenuBuilder.nextModel.name}`)
-                            .setLabel(locale.nextModel)
-                            .setStyle(ButtonStyle.Primary)
+                        new ButtonBuilder({
+                            custom_id: `!${MenuBuilder.name}.${MenuBuilder.previousModel.name}`,
+                            label: locale.previousModel,
+                            style: ButtonStyle.Primary
+                        }),
+                        new ButtonBuilder({
+                            custom_id: `!${MenuBuilder.name}.${MenuBuilder.nextModel.name}`,
+                            label: locale.nextModel,
+                            style: ButtonStyle.Primary
+                        })
                     ]
                 }),
                 new ActionRowBuilder<StringSelectMenuBuilder>({

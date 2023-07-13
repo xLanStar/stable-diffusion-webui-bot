@@ -7,15 +7,16 @@ import { Menu } from "../../types.js";
 const ModelMenu: Menu = {
 	name: "modelMenu",
 	build: (locale: LocaleData, builderName?: string) => {
-		return new StringSelectMenuBuilder()
-			.setCustomId(builderName ? `!${builderName}_${ModelMenu.name}` : ModelMenu.name)
-			.setPlaceholder(stableDiffusion.models[Object.keys(stableDiffusion.models)[0]].title)
-			.setOptions(...Object.keys(stableDiffusion.models).map((model_name: string) => {
+		return new StringSelectMenuBuilder({
+			custom_id: builderName ? `!${builderName}_${ModelMenu.name}` : ModelMenu.name,
+			placeholder: stableDiffusion.models[Object.keys(stableDiffusion.models)[0]].title,
+			options: Object.keys(stableDiffusion.models).map((model_name: string) => {
 				return {
 					label: stableDiffusion.models[model_name].title,
 					value: model_name
 				}
-			}))
+			})
+		})
 	},
     prebuild: true,
 	onInteraction: async (interaction: StringSelectMenuInteraction) => {

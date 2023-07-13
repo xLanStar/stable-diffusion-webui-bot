@@ -4,10 +4,11 @@ import { Button } from "../../types.js";
 
 const CloseButton: Button = {
 	name: "closeButton",
-	build: (locale: LocaleData) => new ButtonBuilder()
-		.setCustomId(CloseButton.name)
-		.setLabel(locale.close)
-		.setStyle(ButtonStyle.Danger),
+	build: (locale: LocaleData) => new ButtonBuilder({
+		custom_id: CloseButton.name,
+		label: locale.close,
+		style: ButtonStyle.Danger
+	}),
 	prebuild: true,
 	onInteraction: async (interaction: ButtonInteraction) => {
 		if (interaction.message.deletable)
