@@ -1,9 +1,9 @@
 import { Message, User } from "discord.js";
-import ProgressBuilder from "../builders/progress.builder.ts";
-import Txt2imgResultBuilder from "../builders/requestResult.builder.ts";
-import { LocaleData, f } from "../i18n.ts";
-import logger from "../logger.ts";
-import stableDiffusion from "../stable_diffusion.ts";
+import ProgressBuilder from "../builders/progress.builder";
+import Txt2imgResultBuilder from "../builders/requestResult.builder";
+import { LocaleData, f } from "../i18n";
+import logger from "../logger";
+import stableDiffusion from "../stable_diffusion";
 import { Method, Progress, RequestInput } from "../types/type.js";
 
 const { PROGRESS_INTERVAL } = process.env;

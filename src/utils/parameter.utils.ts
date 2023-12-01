@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Message, MessageManager, RepliableInteraction } from "discord.js";
-import { LocaleData } from "../i18n.ts";
-import logger from "../logger.ts";
-import { Methods } from "../types/enums.ts";
+import { LocaleData } from "../i18n";
+import logger from "../logger";
+import { Methods } from "../types/enums";
 import { Method, RequestInput } from "../types/type.js";
-import { alertReply } from "./interaction.utils.ts";
+import { alertReply } from "./interaction.utils";
 
 export const getLastParameterMessage = async (messages: MessageManager, message: Message): Promise<Message> => {
     let sourceMessage = message;

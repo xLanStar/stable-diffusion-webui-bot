@@ -1,7 +1,7 @@
 import { Interaction, Locale, LocaleString, LocalizationMap } from 'discord.js';
 import enUS from './langs/en-US.json' assert { type: "json" };
 import zhTW from './langs/zh-TW.json' assert { type: "json" };
-import logger from './logger.ts';
+import logger from './logger';
 
 export type LocaleData = typeof enUS;
 

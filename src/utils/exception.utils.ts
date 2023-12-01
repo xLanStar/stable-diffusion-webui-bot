@@ -1,6 +1,6 @@
 import { RepliableInteraction } from "discord.js";
-import { LocaleData, f } from "../i18n.ts";
-import { alertReply } from "./interaction.utils.ts";
+import { LocaleData, f } from "../i18n";
+import { alertReply } from "./interaction.utils";
 
 
 export const checkInteger = (interaction: RepliableInteraction, locale: LocaleData, name: string, value?: any) => {

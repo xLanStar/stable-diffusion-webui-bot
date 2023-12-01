@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
-        "noEmit": true,
-        "allowImportingTsExtensions": true,
-        "target": "ESNext",
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "module": "ESNext",
+        "moduleResolution": "Node10",
         "resolveJsonModule": true,
+        "declaration": true,
+        "composite": true,
+        "emitDeclarationOnly": true,
+        "allowImportingTsExtensions": true,
         "esModuleInterop": true,
-        "preserveSymlinks": true,
+    },
+    "ts-node": {
+        "esm": true,
     },
 }
