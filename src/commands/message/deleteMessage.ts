@@ -3,9 +3,9 @@ import {
   ContextMenuCommandBuilder,
   MessageContextMenuCommandInteraction,
 } from "discord.js";
+import bot from "../../bot.ts";
 import { getCommandLocalizations, t } from "../../i18n.ts";
 import { Command } from "../../types/type.js";
-import bot from "../../bot.ts";
 
 const DeleteMessageCommand: Command = {
   name: "deleteMessage",
@@ -14,7 +14,10 @@ const DeleteMessageCommand: Command = {
     .setNameLocalizations(getCommandLocalizations("delete_message"))
     .setType(ApplicationCommandType.Message),
   onInteraction: async (interaction: MessageContextMenuCommandInteraction) => {
-    if (!interaction.targetMessage.deletable || interaction.targetMessage.author.id !== bot.user.id) {
+    if (
+      !interaction.targetMessage.deletable ||
+      interaction.targetMessage.author.id !== bot.user.id
+    ) {
       interaction.reply({
         content: t(interaction).exceptions.undeletable,
         ephemeral: true,
@@ -23,6 +26,7 @@ const DeleteMessageCommand: Command = {
     }
 
     await interaction.targetMessage.delete();
+    interaction.reply({ content: t(interaction).delete_success, ephemeral: true });
   },
 };
 
