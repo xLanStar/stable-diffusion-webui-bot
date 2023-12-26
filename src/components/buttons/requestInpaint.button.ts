@@ -17,6 +17,9 @@ const RequestInpaintButton: Button = {
     }),
   prebuild: true,
   onInteraction: async (interaction: ButtonInteraction) => {
+    interaction.reply({ content: "已暫時關閉此功能", ephemeral: true });
+    return;
+
     const locale = t(interaction);
 
     const sourceMessage = await getLastParameterMessage(
