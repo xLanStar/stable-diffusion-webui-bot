@@ -4,12 +4,12 @@ import { Button } from "../../types/type.js";
 import { getRequestInput } from "../../utils/parameter.utils.ts";
 import RequestSetting2Modal from "../modals/requestSetting2.modal.ts";
 
-const Txt2imgSetting2Button: Button = {
-  name: "txt2imgSetting2Button",
+const RequestSetting2Button: Button = {
+  name: "requestSetting2Button",
   build: (locale: LocaleData) =>
     new ButtonBuilder({
-      custom_id: Txt2imgSetting2Button.name,
-      label: locale.txt2img_settings_2,
+      custom_id: RequestSetting2Button.name,
+      label: locale.request_settings_2,
       style: ButtonStyle.Primary,
     }),
   prebuild: true,
@@ -29,4 +29,4 @@ const Txt2imgSetting2Button: Button = {
   },
 };
 
-export default Txt2imgSetting2Button;
+export default RequestSetting2Button;

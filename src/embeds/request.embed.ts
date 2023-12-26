@@ -27,7 +27,10 @@ const RequestEmbed: IRequestEmbed = {
         iconURL: user.avatarURL(),
         name: requestInput.method,
       },
-      title: locale.txt2img_parameters,
+      title:
+        requestInput.method === "txt2img"
+          ? locale.txt2img_parameters
+          : locale.img2img_parameters,
       fields: [
         {
           name: locale.prompt,

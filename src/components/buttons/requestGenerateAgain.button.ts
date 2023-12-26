@@ -1,18 +1,18 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle } from "discord.js";
-import RequestBuilder from "../../builders/request.builder.ts";
 import { LocaleData, t } from "../../i18n.ts";
-import { Button } from "../../types/type.ts";
+import { Button } from "../../types/type.js";
+import { handleRequest } from "../../utils/generate.utils.ts";
 import {
   getLastParameterMessage,
   getRequestInput,
 } from "../../utils/parameter.utils.ts";
 
-const Txt2imgInpaintButton: Button = {
-  name: "txt2imgInpaintButton",
+const RequestGenerateAgainButton: Button = {
+  name: "requestGenerateAgainButton",
   build: (locale: LocaleData) =>
     new ButtonBuilder({
-      custom_id: Txt2imgInpaintButton.name,
-      label: locale.inpaint,
+      custom_id: RequestGenerateAgainButton.name,
+      label: locale.generate_again,
       style: ButtonStyle.Success,
     }),
   prebuild: true,
@@ -27,21 +27,19 @@ const Txt2imgInpaintButton: Button = {
     const requestInput = await getRequestInput(
       interaction,
       locale,
-      sourceMessage
+      sourceMessage,
+      true
     );
     if (!requestInput) return;
 
-    requestInput.method = "img2img";
-
-    interaction.reply(
-      RequestBuilder.build(
-        locale,
-        interaction.user,
-        requestInput,
-        interaction.message.attachments.first()?.url
-      )
-    );
+    await interaction.deferUpdate();
+    handleRequest({
+      ...requestInput,
+      user: interaction.user,
+      parameterMessage: sourceMessage,
+      locale,
+    });
   },
 };
 
-export default Txt2imgInpaintButton;
+export default RequestGenerateAgainButton;

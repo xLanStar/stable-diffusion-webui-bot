@@ -5,9 +5,9 @@ import {
 } from "discord.js";
 import CloseButton from "../components/buttons/close.button.ts";
 import HomeButton from "../components/buttons/home.button.ts";
-import Txt2imgConfirmButton from "../components/buttons/txt2imgConfirm.button.ts";
-import Txt2imgSetting1Button from "../components/buttons/txt2imgSetting1.button.ts";
-import Txt2imgSetting2Button from "../components/buttons/txt2imgSetting2.button.ts";
+import RequestConfirmButton from "../components/buttons/requestConfirm.button.ts";
+import RequestSetting1Button from "../components/buttons/requestSetting1.button.ts";
+import RequestSetting2Button from "../components/buttons/requestSetting2.button.ts";
 import SamplerMenu from "../components/selectMenus/sampler.menu.ts";
 import { LocaleData } from "../i18n.ts";
 import { Builder } from "../types/type.js";
@@ -26,13 +26,13 @@ const RequestComponentsBuilder: IRequestComponentsBuilder = {
       }),
       new ActionRowBuilder<ButtonBuilder>({
         components: [
-          Txt2imgSetting1Button.static[lang],
-          Txt2imgSetting2Button.static[lang],
+          RequestSetting1Button.static[lang],
+          RequestSetting2Button.static[lang],
         ],
       }),
       new ActionRowBuilder<ButtonBuilder>({
         components: [
-          Txt2imgConfirmButton.static[lang],
+          RequestConfirmButton.static[lang],
           HomeButton.static[lang],
           CloseButton.static[lang],
         ],

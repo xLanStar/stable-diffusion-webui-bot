@@ -5,9 +5,9 @@ import {
   User,
 } from "discord.js";
 import DeleteButton from "../components/buttons/delete.button.ts";
-import Txt2imgAdjustButton from "../components/buttons/txt2imgAdjust.button.ts";
-import Txt2imgGenerateAgainButton from "../components/buttons/txt2imgGenerateAgain.button.ts";
-import Txt2imgInpaintButton from "../components/buttons/txt2imgInpaint.button.ts";
+import RequestAdjustButton from "../components/buttons/requestAdjust.button.ts";
+import RequestGenerateAgainButton from "../components/buttons/requestGenerateAgain.button.ts";
+import RequestInpaintButton from "../components/buttons/requestInpaint.button.ts";
 import { LocaleData, f } from "../i18n.ts";
 import { Builder } from "../types/type.js";
 
@@ -26,9 +26,9 @@ const RequestResultBuilder: IRequestResultBuilder = {
       components: [
         new ActionRowBuilder<ButtonBuilder>({
           components: [
-            Txt2imgGenerateAgainButton.static[lang],
-            Txt2imgInpaintButton.static[lang],
-            Txt2imgAdjustButton.static[lang],
+            RequestGenerateAgainButton.static[lang],
+            RequestInpaintButton.static[lang],
+            RequestAdjustButton.static[lang],
             DeleteButton.static[lang],
           ],
         }),

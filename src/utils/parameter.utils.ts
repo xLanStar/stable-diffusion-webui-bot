@@ -24,7 +24,6 @@ export const getRequestInput = async (interaction: RepliableInteraction, locale:
         return null;
     }
     const method: Method = Methods[embed.author.name];
-    logger.info(method);
     if (!method) {
         alertReply(interaction, locale.exceptions.no_parameters) // TODO message
         return null;
