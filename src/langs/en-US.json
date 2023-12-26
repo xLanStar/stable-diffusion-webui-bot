@@ -57,7 +57,7 @@
         "n_iter": "Number of runs",
         "batch_size": "Number of images generated in each run"
     },
-    "waiting": "Waiting... You are now currently at %value%",
+    "waiting": "Please wait... You are currently %value% in the line.",
     "done": "Done! %user%",
     "exceptions": {
         "unknown": "Oops.. Caught Exception...",
