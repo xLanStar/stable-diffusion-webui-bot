@@ -109,7 +109,7 @@ export class BotClient extends Client {
         `The command name=${command.name} have already been registered.`
       );
     this.commands.set(command.name, command);
-    this.commandArray.push(command.command.toJSON());
+    this.commandArray.push(command.command);
   }
 
   private registerEvent(once: Boolean, name: keyof ClientEvents, execute: any) {
