@@ -4,13 +4,15 @@ import logger from "../../logger.ts";
 export default {
   name: "channelCreate",
   execute: async (channel: Channel) => {
-    logger.info(`join channel`);
     logger.info(
-      channel.id,
-      channel.isDMBased(),
-      channel.isTextBased(),
-      channel.isThread(),
-      channel.isVoiceBased()
+      {
+        id: channel.id,
+        isDMBased: channel.isDMBased(),
+        isTextBased: channel.isTextBased(),
+        isThread: channel.isThread(),
+        isVoiceBased: channel.isVoiceBased(),
+      },
+      "created channel:"
     );
   },
 };

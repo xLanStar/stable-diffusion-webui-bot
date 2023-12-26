@@ -1,4 +1,4 @@
-import { APIEmbed, AttachmentBuilder, EmbedBuilder, User } from "discord.js";
+import { APIEmbed, EmbedBuilder, User } from "discord.js";
 import { LocaleData } from "../i18n.ts";
 import stableDiffusion from "../stable_diffusion.ts";
 import { Builder } from "../types/type.js";
@@ -28,11 +28,9 @@ const MenuBuilder: IMenuBuilder = {
           },
         }),
       ],
-      files: [
-        new AttachmentBuilder(stableDiffusion.currentModelPreview, {
-          name: "preview.png",
-        }),
-      ],
+      files: stableDiffusion.currentModelPreviewBuilder
+        ? [stableDiffusion.currentModelPreviewBuilder]
+        : [],
       components: MenuComponentsBuilder.static[locale._key],
     };
   },

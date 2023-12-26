@@ -15,19 +15,8 @@ const Txt2imgButton: Button = {
     }),
   prebuild: true,
   onInteraction: async (interaction: ButtonInteraction) => {
-    console.log(
-      "onInteraction",
-      interaction,
-      interaction.message.attachments.size
-    );
     if (interaction.message.attachments.size)
       await interaction.message.removeAttachments();
-    logger.info(
-      RequestBuilder.build(t(interaction), interaction.user, {
-        method: "txt2img",
-        parameter: defaultTxt2imgParameter,
-      })
-    );
 
     interaction
       .reply(

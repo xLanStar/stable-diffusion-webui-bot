@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { AttachmentBuilder } from "discord.js";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import logger, { fatal } from "./logger.ts";
 import {
   IMG_2_IMG_URL,
@@ -35,8 +35,8 @@ export class StableDiffusionClient {
   samplers: Sampler[];
   models: { [modelHash: string]: Model };
   currentModel: Model;
-  currentModelPreview: Buffer;
-  _currentModelPreview: AttachmentBuilder;
+  currentModelPreviewImage: Buffer;
+  currentModelPreviewBuilder: AttachmentBuilder;
 
   constructor(options: StableDiffusionClientConfig) {
     if (!options.Host) fatal("Stable Diffusion Host should not be empty");
@@ -162,15 +162,22 @@ export class StableDiffusionClient {
     this.currentModel = models.find(
       (model: Model) => model.title === sysinfo.Config.sd_model_checkpoint
     );
-    this.currentModelPreview = readFileSync(
-      `${this._.Path}/models/Stable-diffusion/${this.currentModel.model_name}.preview.png`
-    );
-    this._currentModelPreview = new AttachmentBuilder(
-      stableDiffusion.currentModelPreview,
-      { name: "preview.png" }
-    );
+    if (!this.currentModel) {
+      fatal(
+        `Couldn't find model that equals to ${sysinfo.Config.sd_model_checkpoint}`
+      );
+    }
+    const previewFilePath = `${this._.Path}/models/Stable-diffusion/${this.currentModel.model_name}.preview.png`;
+    if (!this.currentModel.model_name || !existsSync(previewFilePath)) {
+      logger.warn(`Couldn't find preview file at \"${previewFilePath}\"`);
+    } else {
+      this.currentModelPreviewImage = readFileSync(previewFilePath);
+      this.currentModelPreviewBuilder = new AttachmentBuilder(
+        stableDiffusion.currentModelPreviewImage,
+        { name: "preview.png" }
+      );
+    }
 
-    // console.log(sysinfo.Config);
     logger.info(`using model: ${this.currentModel.model_name}`);
   }
 
