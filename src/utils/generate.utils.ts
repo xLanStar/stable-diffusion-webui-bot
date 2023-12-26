@@ -92,6 +92,7 @@ const processRequest = async () => {
                       )
                     : ProgressBuilder.build(locale, user)
                 );
+              lastImage = progress.current_image;
             })
             .catch(() => {
               logger.info("The original message has been delete.");
@@ -99,8 +100,6 @@ const processRequest = async () => {
                 .reply(ProgressBuilder.build(locale, user))
                 .then((message) => (progressing = message));
             });
-
-          lastImage = progress.current_image;
         }),
       progressInterval
     );
