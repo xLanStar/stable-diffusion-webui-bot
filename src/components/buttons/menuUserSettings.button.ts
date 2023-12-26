@@ -12,7 +12,7 @@ const MenuUserSettingsButton: Button = {
     }),
   prebuild: true,
   onInteraction: async (interaction: ButtonInteraction) => {
-    interaction.reply({ content: "尚未實作 user settings" });
+    interaction.reply({ content: "尚未實作 user settings", ephemeral: true });
     // interaction.showModal(UserSettingsModal.build(t(interaction)))
   },
 };
