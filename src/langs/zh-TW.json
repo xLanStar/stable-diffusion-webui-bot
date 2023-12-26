@@ -13,6 +13,7 @@
     "img2img_parameters": "圖片生成圖片參數",
     "inpaint": "重繪",
     "inpaint_profile": "重繪頭貼",
+    "delete_message": "刪除訊息",
     "generate": "生成",
     "previousModel": "<<",
     "nextModel": ">>",

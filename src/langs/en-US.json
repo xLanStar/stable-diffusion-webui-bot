@@ -13,6 +13,7 @@
     "img2img_parameters": "Image to Image parameters",
     "inpaint": "Inpaint",
     "inpaint_profile": "Inpaint Profile",
+    "delete_message": "Delete Message",
     "generate": "Generate",
     "previousModel": "<<",
     "nextModel": ">>",
