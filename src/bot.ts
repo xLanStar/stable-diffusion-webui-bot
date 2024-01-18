@@ -38,17 +38,17 @@ export class BotClient extends Client {
   private _: BotConfig;
 
   // Commands
-  public commands: Collection<String, Command>;
+  public commands: Collection<string, Command>;
   public commandArray: Array<any>;
 
   // Components
-  public components: Collection<String, Component<any>>;
+  public components: Collection<string, Component<any>>;
 
   // Embeds
-  public embeds: Collection<String, Embed>;
+  public embeds: Collection<string, Embed>;
 
   // Builders
-  public builders: Collection<String, Builder>;
+  public builders: Collection<string, Builder>;
 
   constructor(options: BotConfig) {
     super(options);
@@ -63,17 +63,17 @@ export class BotClient extends Client {
     if (!this._.token) fatal("Bot client token should not be empty");
     this._.timeout = this._.timeout || 5000;
     // Commands
-    this.commands = new Collection<String, Command>();
+    this.commands = new Collection<string, Command>();
     this.commandArray = [];
 
     // Components
-    this.components = new Collection<String, Component<any>>();
+    this.components = new Collection<string, Component<any>>();
 
     // Components
-    this.embeds = new Collection<String, Embed>();
+    this.embeds = new Collection<string, Embed>();
 
     // Builders
-    this.builders = new Collection<String, Builder>();
+    this.builders = new Collection<string, Builder>();
   }
 
   private registerComponent(component: Component<any>) {

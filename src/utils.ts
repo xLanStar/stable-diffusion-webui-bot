@@ -1,6 +1,6 @@
 import { readdirSync, statSync } from "fs";
 
-type FilterFunction = (file: String) => boolean;
+type FilterFunction = (file: string) => boolean;
 export const walkDir = (
   folder: string,
   filter: FilterFunction | undefined,

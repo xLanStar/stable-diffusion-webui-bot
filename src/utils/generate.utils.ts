@@ -28,7 +28,7 @@ export const handleRequest = async (request: WaitingRequestInput) => {
   requestQueue.push(request);
   if (!isRequesting) {
     isRequesting = true;
-    processRequest();
+    process();
   } else {
     request.progressing = await request.parameterMessage.reply({
       content: f(request.locale.waiting, { value: requestQueue.length }),
@@ -41,7 +41,7 @@ const requestFunc: Partial<Record<Method, Function>> = {
   img2img: stableDiffusion.requestImg2img,
 };
 
-const processRequest = async () => {
+const process = async () => {
   while (requestQueue.length) {
     const {
       method,
@@ -53,7 +53,7 @@ const processRequest = async () => {
     } = requestQueue.shift();
 
     // Update Waiting
-    for (let i = 0; i != requestQueue.length; i++) {
+    for (let i = 0; i < requestQueue.length; i++) {
       requestQueue[i].progressing.edit({
         content: f(locale.waiting, { value: i + 1 }),
       });

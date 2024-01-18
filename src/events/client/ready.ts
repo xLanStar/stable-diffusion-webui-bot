@@ -4,7 +4,7 @@ import logger from "../../logger.ts";
 export default {
   name: "ready",
   once: true,
-  execute: async () => {
+  async execute() {
     logger.info(`Ready ${bot.user?.tag} ${bot.user.id}`);
   },
 };

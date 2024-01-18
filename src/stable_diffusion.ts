@@ -139,11 +139,15 @@ export class StableDiffusionClient {
           `Couldn't get samplers from ${this.helper.defaults.baseURL}${MODELS_URL}`
         )
       )) as any;
-    this.samplers = this._.Samplers.length
-      ? samplers.filter(({ name }) => this._.Samplers.includes(name))
-      : samplers.length > 25
-      ? samplers.slice(0, 25)
-      : samplers;
+    if (this._.Samplers.length) {
+      this.samplers = samplers.filter(({ name }) =>
+        this._.Samplers.includes(name)
+      );
+    } else if (samplers.length > 25) {
+      this.samplers = samplers.slice(0, 25);
+    } else {
+      this.samplers = samplers;
+    }
     if (
       !this.samplers.find((sampler) => sampler.name === this._.DefaultSampler)
     ) {
@@ -169,7 +173,7 @@ export class StableDiffusionClient {
     }
     const previewFilePath = `${this._.Path}/models/Stable-diffusion/${this.currentModel.model_name}.preview.png`;
     if (!this.currentModel.model_name || !existsSync(previewFilePath)) {
-      logger.warn(`Couldn't find preview file at \"${previewFilePath}\"`);
+      logger.warn(`Couldn't find preview file at "${previewFilePath}"`);
     } else {
       this.currentModelPreviewImage = readFileSync(previewFilePath);
       this.currentModelPreviewBuilder = new AttachmentBuilder(

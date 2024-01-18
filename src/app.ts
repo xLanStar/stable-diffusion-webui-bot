@@ -16,7 +16,6 @@ process.once("exit", () => {
 });
 
 const main = async () => {
-  // db.read();
   try {
     await stableDiffusion.load();
     await bot.loadModules();

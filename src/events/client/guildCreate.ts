@@ -3,7 +3,7 @@ import logger from "../../logger.ts";
 
 export default {
   name: "guildCreate",
-  execute: async (guild: Guild) => {
+  async execute(guild: Guild) {
     logger.info(`join guild`);
     logger.info(guild.id);
   },

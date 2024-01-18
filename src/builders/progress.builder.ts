@@ -18,9 +18,7 @@ const ProgressBuilder: IProgressBuilder = {
   build: (locale: LocaleData, user: User) => {
     return {
       embeds: [ProgressEmbed.build(locale, user)],
-      components: [
-        // TODO: interrupt
-      ],
+      components: [],
     };
   },
   update: (

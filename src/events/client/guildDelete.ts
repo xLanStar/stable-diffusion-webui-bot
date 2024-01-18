@@ -3,7 +3,7 @@ import logger from "../../logger.ts";
 
 export default {
   name: "guildDelete",
-  execute: async (guild: Guild) => {
+  async execute(guild: Guild) {
     logger.info(`leave guild`);
     logger.info(guild.id);
   },

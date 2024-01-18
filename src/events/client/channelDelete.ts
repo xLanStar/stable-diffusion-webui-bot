@@ -3,7 +3,7 @@ import logger from "../../logger.ts";
 
 export default {
   name: "channelDelete",
-  execute: async (channel: Channel) => {
+  async execute(channel: Channel) {
     logger.info(
       {
         id: channel.id,

@@ -6,7 +6,7 @@ import { IInteractable } from "../../types/type.js";
 const { commands, components, builders } = bot;
 
 export const processCustomId = (customId: string): [string, string] =>
-  customId[0] === "!"
+  customId?.startsWith("!")
     ? [
         customId.substring(1, customId.lastIndexOf("_")),
         customId.substring(customId.lastIndexOf("_") + 1),
@@ -15,7 +15,7 @@ export const processCustomId = (customId: string): [string, string] =>
 
 export default {
   name: "interactionCreate",
-  execute: async (interaction: Interaction) => {
+  async execute(interaction: Interaction) {
     // Commands
     if (
       interaction.isChatInputCommand() ||
@@ -51,7 +51,7 @@ export default {
     ) {
       const { customId } = interaction;
       // Builder customId format: [!<builderName>.<functionName>.<...builderArgs>]
-      if (customId[0] === "!") {
+      if (customId?.startsWith("!")) {
         logger.info(customId.substring(1));
         const [builderName, functionName, ...builderArgs] = customId
           .substring(1)
